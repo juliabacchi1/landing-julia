@@ -9,8 +9,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-montserrat)", ...defaultTheme.fontFamily.sans],
-        serif: ["var(--font-gloock)", ...defaultTheme.fontFamily.serif],
+        sans: ["var(--font-geist-sans)", ...defaultTheme.fontFamily.sans],
+        serif: ["var(--font-geist-mono)", ...defaultTheme.fontFamily.serif],
       },
       colors: {
         primary: "#FF4D4D",

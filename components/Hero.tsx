@@ -44,13 +44,29 @@ export default function Hero() {
   if (!hero) return <div>Carregando...</div>;
 
   return (
-    <section className="hero">
-      <h1>{hero.title}</h1>
-      <p>{hero.subtitle}</p>
-      <a href={hero.ctaLink}>
-        <button>{hero.ctaText}</button>
-      </a>
-      <img src={hero.image.asset.url} alt={hero.image.alt} />
+    <section id="hero" className="flex flex-col-reverse md:flex-row items-center justify-between max-w-7xl mx-auto px-6 py-16 gap-12">
+      <div className="flex-1 text-center md:text-left">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-orange-600 mb-6 leading-tight">
+          {hero.title}
+        </h1>
+        <p className="text-gray-700 dark:text-gray-300 mb-8 text-lg md:text-xl">
+          {hero.subtitle}
+        </p>
+        <a href={hero.ctaLink}>
+          <button className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3 rounded-lg shadow-lg transition-colors duration-300 font-semibold">
+            {hero.ctaText}
+          </button>
+        </a>
+      </div>
+
+      <div className="flex-1 max-w-md md:max-w-lg">
+        <img
+          src={hero.image.asset.url}
+          alt={hero.image.alt}
+          className="rounded-xl shadow-xl mx-auto"
+        />
+      </div>
     </section>
   );
+
 }
