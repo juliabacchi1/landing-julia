@@ -13,8 +13,14 @@ module.exports = {
         serif: ["var(--font-geist-mono)", ...defaultTheme.fontFamily.serif],
       },
       colors: {
-        primary: "#FF4D4D",
-        secondary: "#1E1E24",
+        gemini: {
+          blue: "#8ab4f8",
+          pink: "#f482c3",
+          "dark-bg": "#131314",
+          "light-bg": "#1f1f1f",
+          "text-primary": "#e3e3e3",
+          "text-secondary": "#8a8a8a",
+        },
       },
     },
   },
