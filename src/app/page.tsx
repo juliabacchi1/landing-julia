@@ -6,6 +6,7 @@ import PricingSection from "./components/PricingSection";
 import TestimonialsSection from "./components/TestimonialsSection";
 import FaqSection from "./components/FaqSection";
 import CtaSection from "./components/CtaSection";
+import Footer from "./components/FooterSection";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <TestimonialsSection />
       <FaqSection />
       <CtaSection />
+      <Footer />
     </main>
   );
 }
