@@ -39,7 +39,7 @@ export default function Hero() {
     );
 
   return (
-    <header className="pt-28 pb-20 px-4 md:pt-32 md:pb-24 bg-white">
+    <section id="hero" className="pt-28 pb-20 px-4 md:pt-32 md:pb-24 bg-white">
       <div className="container mx-auto max-w-6xl">
         <div className="flex flex-col md:flex-row items-center">
           <div className="md:w-1/2 mb-10 md:mb-0 md:pr-10">
@@ -132,6 +132,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-    </header>
+    </section>
   );
 }

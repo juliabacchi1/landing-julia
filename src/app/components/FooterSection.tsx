@@ -5,7 +5,14 @@ import { motion } from "framer-motion";
 import { client } from "../../../lib/sanity";
 import { footerQuery } from "../../../queries/footer";
 import Link from "next/link";
-import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
+import {
+  Facebook,
+  Instagram,
+  Linkedin,
+  Twitter,
+  Youtube,
+  Globe,
+} from "lucide-react";
 
 const socialIcons = {
   facebook: <Facebook className="h-6 w-6" />,
@@ -13,6 +20,7 @@ const socialIcons = {
   linkedin: <Linkedin className="h-6 w-6" />,
   twitter: <Twitter className="h-6 w-6" />,
   youtube: <Youtube className="h-6 w-6" />,
+  portfolio: <Globe className="h-6 w-6" />,
 };
 
 type FooterData = {
@@ -30,6 +38,11 @@ type FooterData = {
       url: string;
     }[];
   }[];
+  ctaBox?: {
+    text: string;
+    buttonText: string;
+    buttonLink: string;
+  };
   copyright: string;
 };
 
@@ -46,11 +59,14 @@ export default function Footer() {
   if (!data) return null;
 
   // Separar a marca em duas partes pra aplicar destaque
-  const brandParts = data.brandName.split(data.brandHighlight);
+  const hasHighlight = data.brandName.includes(data.brandHighlight);
+  const brandParts = hasHighlight
+    ? data.brandName.split(data.brandHighlight)
+    : [data.brandName, ""];
 
   return (
-    <footer className="bg-dark text-white py-16 px-4">
-      <div className="container mx-auto max-w-6xl">
+    <footer className="bg-dark text-white py-8 px-4">
+      <div className="container mx-auto max-w-7xl">
         <motion.div
           className="grid grid-cols-1 md:grid-cols-4 gap-10"
           initial={{ opacity: 0, y: 20 }}
@@ -73,6 +89,7 @@ export default function Footer() {
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={`Ir para ${platform}`}
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   {socialIcons[platform]}
@@ -90,6 +107,7 @@ export default function Footer() {
                   <li key={j}>
                     <Link
                       href={link.url}
+                      aria-label={`Ir para ${link.text}`}
                       className="text-gray-400 hover:text-white transition-colors"
                     >
                       {link.text}
@@ -99,6 +117,24 @@ export default function Footer() {
               </ul>
             </div>
           ))}
+
+          {data.ctaBox && (
+            <div>
+              <p className="font-semibold text-lg mb-4">{data.ctaBox.text}</p>
+              <Link
+                href={data.ctaBox.buttonLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <button
+                  className="bg-secondary text-white px-4 py-2 rounded hover:bg-orange-600 transition-all"
+                  aria-label={`Abrir ${data.ctaBox.buttonText} no WhatsApp`}
+                >
+                  {data.ctaBox.buttonText}
+                </button>
+              </Link>
+            </div>
+          )}
         </motion.div>
 
         {/* Copyright */}

@@ -27,24 +27,19 @@ export default function CtaSection() {
   const [formData, setFormData] = useState<Record<string, string | boolean>>(
     {}
   );
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
   >("idle");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     client
       .fetch(ctaQuery)
       .then((res) => {
         setData(res);
-        // Inicializa formData com campos vazios/false
         const initialFormState: Record<string, string | boolean> = {};
         res.formFields.forEach((field: FormField) => {
-          if (field.type === "checkbox") {
-            initialFormState[field.name] = false;
-          } else {
-            initialFormState[field.name] = "";
-          }
+          initialFormState[field.name] = field.type === "checkbox" ? false : "";
         });
         setFormData(initialFormState);
       })
@@ -72,21 +67,39 @@ export default function CtaSection() {
     setIsSubmitting(true);
     setSubmitStatus("idle");
 
-    try {
-      // Aqui você pode implementar o envio real do formulário, ex:
-      // await fetch('/api/contact', { ... })
+    const formWithExtras = {
+      ...formData,
+      _captcha: "false",
+    };
 
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simula delay
-      setSubmitStatus("success");
-      // Resetar formulário após sucesso
-      if (data) {
-        const resetState: Record<string, string | boolean> = {};
-        data.formFields.forEach((field) => {
-          resetState[field.name] = field.type === "checkbox" ? false : "";
-        });
-        setFormData(resetState);
+    try {
+      const response = await fetch(
+        "https://formsubmit.co/ajax/juliabacchi92@gmail.com",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(formWithExtras),
+        }
+      );
+
+      if (response.ok) {
+        setSubmitStatus("success");
+
+        if (data) {
+          const resetState: Record<string, string | boolean> = {};
+          data.formFields.forEach((field) => {
+            resetState[field.name] = field.type === "checkbox" ? false : "";
+          });
+          setFormData(resetState);
+        }
+      } else {
+        setSubmitStatus("error");
       }
     } catch (error) {
+      console.error("Erro ao enviar formulário:", error);
       setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
@@ -116,6 +129,9 @@ export default function CtaSection() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Honeypot anti-spam */}
+            <input type="text" name="_honey" className="hidden" />
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {data.formFields
                 .filter((field) =>
@@ -226,8 +242,8 @@ export default function CtaSection() {
             <div>
               <button
                 type="submit"
-                disabled={isSubmitting}
                 className="w-full bg-gradient-to-r from-primary to-secondary text-white font-semibold px-8 py-3 rounded-full transition-all hover:opacity-90 disabled:opacity-70"
+                disabled={isSubmitting}
               >
                 {isSubmitting ? "Enviando..." : data.submitText}
               </button>

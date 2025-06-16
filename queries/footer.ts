@@ -13,6 +13,11 @@ export const footerQuery = `*[_type == "footer"][0] {
       url
     }
   },
+  ctaBox {
+    text,
+    buttonText,
+    buttonLink
+  },
   copyright
 }
 `;
