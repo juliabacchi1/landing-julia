@@ -3,11 +3,10 @@ export const heroQuery = `*[_type == "hero"][0]{
   subtitle,
   ctaText,
   ctaLink,
+  ctaTextTwo,
+  ctaLinkTwo,
   image{
-    asset->{
-      _id,
-      url
-    },
+    asset->{_id, url},
     alt
   }
 }`;

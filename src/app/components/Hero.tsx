@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { client } from "../../../lib/sanity";
+import { heroQuery } from "../../../queries/hero";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -27,23 +28,7 @@ export default function Hero() {
 
   useEffect(() => {
     client
-      .fetch(
-        `*[_type == "hero"][0]{
-          title,
-          subtitle,
-          ctaText,
-          ctaLink,
-          ctaTextTwo,
-          ctaLinkTwo,
-          image{
-            asset->{
-              _id,
-              url
-            },
-            alt
-          }
-        }`
-      )
+      .fetch(heroQuery)
       .then((data) => setHero(data))
       .catch(console.error);
   }, []);
@@ -84,18 +69,37 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <Link
-                href={hero.ctaLink}
-                className="bg-gradient-to-r from-primary to-secondary text-white font-semibold px-8 py-3 rounded-full text-center transition-all hover:opacity-90"
-              >
-                {hero.ctaText}
-              </Link>
-              <Link
-                href={hero.ctaLinkTwo}
-                className="border-2 border-primary text-primary font-semibold px-8 py-3 rounded-full text-center transition-all hover:bg-primary hover:text-white"
-              >
-                {hero.ctaTextTwo}
-              </Link>
+              {hero.ctaLink ? (
+                <Link
+                  href={hero.ctaLink}
+                  className="bg-gradient-to-r from-primary to-secondary text-white font-semibold px-8 py-3 rounded-full text-center transition-all hover:opacity-90"
+                >
+                  {hero.ctaText}
+                </Link>
+              ) : (
+                <button
+                  disabled
+                  className="bg-gray-400 cursor-not-allowed font-semibold px-8 py-3 rounded-full text-center"
+                >
+                  {hero.ctaText}
+                </button>
+              )}
+
+              {hero.ctaLinkTwo ? (
+                <Link
+                  href={hero.ctaLinkTwo}
+                  className="border-2 border-primary text-primary font-semibold px-8 py-3 rounded-full text-center transition-all hover:bg-primary hover:text-white"
+                >
+                  {hero.ctaTextTwo}
+                </Link>
+              ) : (
+                <button
+                  disabled
+                  className="border-2 border-gray-400 text-gray-400 font-semibold px-8 py-3 rounded-full text-center cursor-not-allowed"
+                >
+                  {hero.ctaTextTwo}
+                </button>
+              )}
             </motion.div>
           </div>
 

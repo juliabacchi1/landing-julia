@@ -1,11 +1,13 @@
 import Hero from "./components/Hero";
-import ProcessSection from "./components/ProcessSection";
+import BrandsSection from "./components/BrandsSection";
+import { BenefitsSection } from "./components/benefitsSection";
 
 export default function Home() {
   return (
     <main>
       <Hero />
-      <ProcessSection />
+      <BrandsSection />
+      <BenefitsSection />
       {/* outras seções */}
     </main>
   );
