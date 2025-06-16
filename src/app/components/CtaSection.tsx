@@ -27,19 +27,24 @@ export default function CtaSection() {
   const [formData, setFormData] = useState<Record<string, string | boolean>>(
     {}
   );
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
   >("idle");
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     client
       .fetch(ctaQuery)
       .then((res) => {
         setData(res);
+        // Inicializa formData com campos vazios/false
         const initialFormState: Record<string, string | boolean> = {};
         res.formFields.forEach((field: FormField) => {
-          initialFormState[field.name] = field.type === "checkbox" ? false : "";
+          if (field.type === "checkbox") {
+            initialFormState[field.name] = false;
+          } else {
+            initialFormState[field.name] = "";
+          }
         });
         setFormData(initialFormState);
       })
@@ -62,49 +67,54 @@ export default function CtaSection() {
     setFormData((prev) => ({ ...prev, [name]: checked }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus("idle");
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  setSubmitStatus("idle");
 
-    const formWithExtras = {
-      ...formData,
-      _captcha: "false",
-    };
+  try {
+    const formDataToSend = new FormData();
 
-    try {
-      const response = await fetch(
-        "https://formsubmit.co/ajax/juliabacchi92@gmail.com",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(formWithExtras),
-        }
-      );
-
-      if (response.ok) {
-        setSubmitStatus("success");
-
-        if (data) {
-          const resetState: Record<string, string | boolean> = {};
-          data.formFields.forEach((field) => {
-            resetState[field.name] = field.type === "checkbox" ? false : "";
-          });
-          setFormData(resetState);
-        }
-      } else {
-        setSubmitStatus("error");
-      }
-    } catch (error) {
-      console.error("Erro ao enviar formulário:", error);
-      setSubmitStatus("error");
-    } finally {
-      setIsSubmitting(false);
+    for (const key in formData) {
+      formDataToSend.append(key, String(formData[key]));
     }
-  };
+
+    // Antispam: campo invisível
+    formDataToSend.append("_honey", "");
+    formDataToSend.append("_captcha", "false");
+
+    // Envia pro FormSubmit com seu e-mail
+    const response = await fetch(
+      "https://formsubmit.co/ajax/juliabacchi92@gmail.com",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+        body: formDataToSend,
+      }
+    );
+
+    if (response.ok) {
+      setSubmitStatus("success");
+      // Resetar formulário após sucesso
+      if (data) {
+        const resetState: Record<string, string | boolean> = {};
+        data.formFields.forEach((field) => {
+          resetState[field.name] = field.type === "checkbox" ? false : "";
+        });
+        setFormData(resetState);
+      }
+    } else {
+      setSubmitStatus("error");
+    }
+  } catch (error) {
+    console.error("Erro no envio do formulário:", error);
+    setSubmitStatus("error");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   if (!data) return null;
 
@@ -129,9 +139,6 @@ export default function CtaSection() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Honeypot anti-spam */}
-            <input type="text" name="_honey" className="hidden" />
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {data.formFields
                 .filter((field) =>
@@ -242,8 +249,8 @@ export default function CtaSection() {
             <div>
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-primary to-secondary text-white font-semibold px-8 py-3 rounded-full transition-all hover:opacity-90 disabled:opacity-70"
                 disabled={isSubmitting}
+                className="w-full bg-gradient-to-r from-primary to-secondary text-white font-semibold px-8 py-3 rounded-full transition-all hover:opacity-90 disabled:opacity-70"
               >
                 {isSubmitting ? "Enviando..." : data.submitText}
               </button>

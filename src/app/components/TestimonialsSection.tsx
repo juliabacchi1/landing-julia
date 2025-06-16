@@ -51,7 +51,7 @@ export default function TestimonialsSection() {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{data.title}</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">{data.subtitle}</p>
+          <p className="text-gray-600 max-w-3xl mx-auto">{data.subtitle}</p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
