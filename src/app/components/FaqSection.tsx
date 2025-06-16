@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { client } from "../../../lib/sanity";
 import { faqQuery } from "../../../queries/faq";
+import { ChevronDown } from "lucide-react";
 
 type FaqItem = {
   question: string;
@@ -65,21 +66,12 @@ export default function FaqSection() {
                 id={`faq-question-${index}`}
               >
                 <span className="font-medium text-left">{item.question}</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className={`h-5 w-5 text-primary transform transition-transform ${
+                <ChevronDown
+                  className={`text-primary transform transition-transform duration-300 ${
                     activeIndex === index ? "rotate-180" : ""
                   }`}
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                  size={20}
+                />
               </button>
               <div
                 id={`faq-answer-${index}`}
