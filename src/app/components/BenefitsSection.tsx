@@ -68,7 +68,7 @@ const iconComponents = {
   ),
 };
 
-export function BenefitsSection() {
+export default function BenefitsSection() {
   const [data, setData] = useState<BenefitsData | null>(null);
 
   useEffect(() => {

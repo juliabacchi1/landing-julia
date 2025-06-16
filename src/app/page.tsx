@@ -1,6 +1,8 @@
 import Hero from "./components/Hero";
 import BrandsSection from "./components/BrandsSection";
-import { BenefitsSection } from "./components/benefitsSection";
+import BenefitsSection from "./components/benefitsSection";
+import ProcessSection from "./components/ProcessSection";
+import { PricingSection } from "./components/PricingSection";
 
 export default function Home() {
   return (
@@ -8,7 +10,8 @@ export default function Home() {
       <Hero />
       <BrandsSection />
       <BenefitsSection />
-      {/* outras seções */}
+      <ProcessSection />
+      <PricingSection />
     </main>
   );
 }
