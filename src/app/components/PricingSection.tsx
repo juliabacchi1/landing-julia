@@ -24,7 +24,7 @@ type PricingData = {
   }>;
 };
 
-export function PricingSection() {
+export default function PricingSection() {
   const [data, setData] = useState<PricingData | null>(null);
 
   useEffect(() => {
