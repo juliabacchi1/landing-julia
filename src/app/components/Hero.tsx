@@ -4,14 +4,7 @@ import React, { useEffect, useState } from "react";
 import { client } from "../../../lib/sanity";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import CustomButton from "./CustomButton";
-import {
-  TrendingUp,
-  ArrowRight,
-  PlayCircle,
-  CheckCircle,
-  Star,
-} from "lucide-react";
+import Link from "next/link";
 
 type HeroData = {
   title: string;
@@ -36,131 +29,105 @@ export default function Hero() {
     client
       .fetch(
         `*[_type == "hero"][0]{
-        title,
-        subtitle,
-        ctaText,
-        ctaLink,
-        ctaTextTwo,
-        ctaLinkTwo,
-        image{
-          asset->{
-            _id,
-            url
-          },
-          alt
-        }
-      }`
+          title,
+          subtitle,
+          ctaText,
+          ctaLink,
+          ctaTextTwo,
+          ctaLinkTwo,
+          image{
+            asset->{
+              _id,
+              url
+            },
+            alt
+          }
+        }`
       )
       .then((data) => setHero(data))
       .catch(console.error);
   }, []);
 
-  if (!hero) return <div>Carregando...</div>;
+  if (!hero)
+    return (
+      <div className="pt-28 pb-20 px-4 md:pt-32 md:pb-24">Carregando...</div>
+    );
 
   return (
-    <motion.section
-      id="hero"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="relative w-full min-h-screen flex flex-col-reverse md:flex-row items-center justify-between px-6 lg:px-16 gap-12 bg-[#131314] text-[#e3e3e3]"
-    >
-      <motion.div
-        className="flex-1 text-center md:text-left z-10 space-y-8"
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.3 }}
-      >
-        <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#1f1f1f] rounded-full">
-          <Star className="text-[#f482c3]" size={18} />
-          <span className="text-sm font-medium text-[#f482c3]">
-            Especialista em conversão
-          </span>
-        </div>
+    <header className="pt-28 pb-20 px-4 md:pt-32 md:pb-24 bg-white">
+      <div className="container mx-auto max-w-6xl">
+        <div className="flex flex-col md:flex-row items-center">
+          <div className="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+            <motion.h1
+              className="text-4xl md:text-5xl font-bold leading-tight mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              {hero.title.split("Convertem")[0]}
+              <span className="text-primary">Convertem</span>
+              {hero.title.split("Convertem")[1]}
+            </motion.h1>
 
-        <h1 className="text-4xl md:text-5xl font-extrabold leading-tight text-transparent bg-clip-text bg-gradient-to-br from-[#8ab4f8] via-[#f482c3] to-[#8ab4f8]">
-          {hero.title}
-        </h1>
+            <motion.p
+              className="text-lg text-gray-600 mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              {hero.subtitle}
+            </motion.p>
 
-        <p className="text-lg md:text-xl text-[#8a8a8a] max-w-2xl mx-auto md:mx-0 leading-relaxed">
-          {hero.subtitle}
-        </p>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-          <CustomButton
-            href={hero.ctaLink}
-            variant="primary"
-            icon={
-              <ArrowRight
-                className="group-hover:translate-x-1 transition-transform"
-                size={20}
-              />
-            }
-          >
-            {hero.ctaText}
-          </CustomButton>
-
-          <CustomButton
-            href="#features"
-            variant="outline"
-            icon={<PlayCircle size={20} />}
-          >
-            {hero.ctaTextTwo}
-          </CustomButton>
-        </div>
-
-        <div className="pt-8">
-          <p className="text-[#8a8a8a] text-sm mb-4">
-            <CheckCircle className="inline mr-2 text-green-500" size={16} />
-            Já ajudamos mais de 200 clientes a aumentar suas conversões
-          </p>
-          <div className="flex flex-wrap justify-center md:justify-start gap-4">
-            {[
-              "Startup Tech",
-              "E-commerce",
-              "Consultoria",
-              "Saúde",
-              "Educação",
-            ].map((client, i) => (
-              <div
-                key={i}
-                className="px-3 py-1 bg-[#1f1f1f] rounded-full text-xs font-medium border border-[#2a2a2a]"
+            <motion.div
+              className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <Link
+                href={hero.ctaLink}
+                className="bg-gradient-to-r from-primary to-secondary text-white font-semibold px-8 py-3 rounded-full text-center transition-all hover:opacity-90"
               >
-                {client}
-              </div>
-            ))}
+                {hero.ctaText}
+              </Link>
+              <Link
+                href={hero.ctaLinkTwo}
+                className="border-2 border-primary text-primary font-semibold px-8 py-3 rounded-full text-center transition-all hover:bg-primary hover:text-white"
+              >
+                {hero.ctaTextTwo}
+              </Link>
+            </motion.div>
+          </div>
+
+          <div className="md:w-1/2">
+            <motion.div
+              className="relative"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              {hero.image?.asset?.url ? (
+                <div className="relative w-full h-96 md:h-[500px] rounded-xl overflow-hidden shadow-xl">
+                  <Image
+                    src={hero.image.asset.url}
+                    alt={hero.image.alt || "Landing page profissional"}
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+              ) : (
+                <div className="w-full h-96 md:h-[500px] bg-gray-100 rounded-xl flex items-center justify-center">
+                  <span className="text-gray-400">Imagem da landing page</span>
+                </div>
+              )}
+
+              <div className="absolute -top-6 -right-6 w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-full opacity-20"></div>
+              <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-accent rounded-full opacity-10"></div>
+            </motion.div>
           </div>
         </div>
-      </motion.div>
-
-      <motion.div
-        className="group flex-1 max-w-md md:max-w-2xl relative w-full h-80 md:h-[600px] overflow-hidden rounded-3xl shadow-2xl border-4 border-[#1f1f1f]"
-        initial={{ scale: 0.95, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.2 }}
-      >
-        <Image
-          src={hero.image.asset.url}
-          alt={hero.image.alt}
-          fill
-          style={{ objectFit: "cover" }}
-          priority
-          className="transition-transform duration-500 group-hover:scale-105"
-        />
-
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-
-        <div className="absolute bottom-6 left-6 bg-[#1f1f1f] px-4 py-3 rounded-lg shadow-xl border border-[#2a2a2a] flex items-center gap-2">
-          <TrendingUp className="text-green-500" size={20} />
-          <div>
-            <p className="font-bold text-white">+150% conversões</p>
-            <p className="text-xs text-[#8a8a8a]">Média de nossos clientes</p>
-          </div>
-        </div>
-
-        <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-[#8ab4f8] rounded-full opacity-10"></div>
-      </motion.div>
-
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#131314] to-transparent z-0"></div>
-    </motion.section>
+      </div>
+    </header>
   );
 }
