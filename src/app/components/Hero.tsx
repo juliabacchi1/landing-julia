@@ -33,10 +33,7 @@ export default function Hero() {
       .catch(console.error);
   }, []);
 
-  if (!hero)
-    return (
-      <div className="pt-28 pb-20 px-4 md:pt-32 md:pb-24">Carregando...</div>
-    );
+  if (!hero) return null;
 
   return (
     <section id="hero" className="pt-28 pb-20 px-4 md:pt-32 md:pb-24 bg-white">
@@ -111,12 +108,13 @@ export default function Hero() {
               transition={{ duration: 0.5 }}
             >
               {hero.image?.asset?.url ? (
-                <div className="relative w-full h-96 md:h-[500px] rounded-xl overflow-hidden shadow-xl">
+                <div className="relative w-full h-auto md:h-auto rounded-xl overflow-hidden shadow-xl">
                   <Image
                     src={hero.image.asset.url}
                     alt={hero.image.alt || "Landing page profissional"}
-                    fill
-                    className="object-cover"
+                    width={800}
+                    height={600}
+                    className="object-contain w-full h-auto"
                     priority
                   />
                 </div>

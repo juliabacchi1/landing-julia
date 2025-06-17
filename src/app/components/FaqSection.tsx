@@ -35,7 +35,7 @@ export default function FaqSection() {
   if (!data) return null;
 
   return (
-    <section id="faq" className="py-10 px-4">
+    <section id="faq" className="py-12 px-4">
       <div className="container mx-auto max-w-4xl">
         <motion.div
           className="text-center mb-16"

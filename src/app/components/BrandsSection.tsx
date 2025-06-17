@@ -35,13 +35,7 @@ export default function BrandsSection() {
       });
   }, []);
 
-  if (!data) {
-    return (
-      <section className="py-10 bg-gray-50 text-center">
-        <p className="text-gray-400 text-lg">Carregando marcas...</p>
-      </section>
-    );
-  }
+  if (!data) return null;
 
   return (
     <section className="py-10 bg-gray-50">
