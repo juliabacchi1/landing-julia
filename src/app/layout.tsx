@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     title: "Landing pages que convertem | Julia Bacchi",
     description:
       "Transforme visitantes em clientes com uma landing page feita sob medida. Foco em conversão, performance e identidade visual forte.",
-    url: "https://juliabacchi.com",
+    url: "https://landings-julia.vercel.app/",
     type: "website",
     siteName: "Julia Bacchi",
     images: "/og-image.jpg",

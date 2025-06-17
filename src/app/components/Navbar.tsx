@@ -28,7 +28,7 @@ export default function Navbar() {
         scrolled ? "bg-white/80 backdrop-blur-md shadow-md" : "bg-transparent"
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <nav className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center mt-4 md:mt-0">
         <a href="#hero" className="text-2xl font-bold text-primary">
           Julia<span className="text-secondary">Bacchi</span>
         </a>
