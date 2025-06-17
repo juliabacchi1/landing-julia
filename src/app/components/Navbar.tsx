@@ -50,7 +50,9 @@ export default function Navbar() {
         {/* Botão */}
         <div className="hidden md:block">
           <a
-            href="#contato"
+            href="https://wa.me/48991779743?text=Ol%C3%A1%20Julia%2C%20te%20achei%20atrav%C3%A9s%20do%20seu%20Site%21"
+            target="_blank"
+            rel="noopener noreferrer"
             className="bg-primary text-white px-5 py-2 rounded-full font-medium hover:bg-secondary transition-colors"
           >
             Fale Conosco

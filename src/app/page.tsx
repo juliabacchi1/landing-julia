@@ -1,6 +1,6 @@
 import Hero from "./components/Hero";
 import BrandsSection from "./components/BrandsSection";
-import BenefitsSection from "./components/benefitsSection";
+import BenefitsSection from "./components/BenefitsSection";
 import ProcessSection from "./components/ProcessSection";
 import PricingSection from "./components/PricingSection";
 import TestimonialsSection from "./components/TestimonialsSection";
