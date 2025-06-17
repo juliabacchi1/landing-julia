@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import Navbar from "./components/Navbar";
 import WhatsAppButton from "./components/WhatsAppButton";
+import Script from "next/script";
+import GAListener from "./components/GAListener";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -52,6 +54,23 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={montserrat.variable}>
       <head>
+        {/* Script GA */}
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=G-LRRG713C84`}
+        />
+        <Script
+          id="gtag-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-LRRG713C84');
+            `,
+          }}
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* Título no iOS */}
         <meta name="apple-mobile-web-app-title" content="Julia Bacchi" />
@@ -92,6 +111,7 @@ export default function RootLayout({
       </head>
       <body>
         <Navbar />
+        <GAListener />
         {children}
         <WhatsAppButton />
       </body>
