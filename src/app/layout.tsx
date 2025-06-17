@@ -55,22 +55,30 @@ export default function RootLayout({
     <html lang="pt-BR" className={montserrat.variable}>
       <head>
         {/* Script GA */}
-        <Script
-          strategy="afterInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=G-LRRG713C84`}
-        />
-        <Script
-          id="gtag-init"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-LRRG713C84');
-            `,
-          }}
-        />
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <Script
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+            />
+            <Script
+              id="google-analytics"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
+            page_path: window.location.pathname,
+            debug_mode: ${process.env.NODE_ENV === "development"}
+          });
+        `,
+              }}
+            />
+          </>
+        )}
+
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* Título no iOS */}
         <meta name="apple-mobile-web-app-title" content="Julia Bacchi" />

@@ -6,6 +6,7 @@ import { client } from "../../../lib/sanity";
 import { pricingQuery } from "../../../queries/pricing";
 import Link from "next/link";
 import { CheckCircle, XCircle } from "lucide-react";
+import { event } from "../../../lib/gtag";
 
 type PricingData = {
   title: string;
@@ -23,6 +24,14 @@ type PricingData = {
     highlight: boolean;
     highlightText: string;
   }>;
+};
+
+const trackSelectPlan = (plano: string) => {
+  event({
+    action: "click_select_plan",
+    category: "plano",
+    label: plano,
+  });
 };
 
 export default function PricingSection() {
@@ -103,6 +112,7 @@ export default function PricingSection() {
 
               <Link
                 href="#contato"
+                onClick={() => trackSelectPlan(plan.name)}
                 className={`block w-full py-3 px-6 text-center font-semibold rounded-full transition-all ${
                   plan.highlight
                     ? "bg-gradient-to-r from-primary to-secondary text-white hover:opacity-90"
