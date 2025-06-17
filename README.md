@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Landing Page Oficial
 
-## Getting Started
+**landings-julia** é a minha **landing page oficial**, criada para apresentar meus serviços de desenvolvimento de sites e landings personalizadas. Pensada para conversão e experiência do usuário, ela mostra como eu trabalho: com foco em design estratégico, conteúdo bem estruturado e tecnologia moderna.
+Desenvolvida com **Next.js, TailwindCSS e Sanity CMS**, é um exemplo real de entrega profissional.
 
-First, run the development server:
+[![License](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)  
+[![Tech Stack](https://img.shields.io/badge/Tech%20Stack-Next.js%20%7C%20React%20%7C%20Tailwind-blue)](https://nextjs.org/)  
+[![Deploy](https://img.shields.io/badge/Deploy-Vercel-purple)](https://landings-julia.vercel.app)  
+[![GitHub](https://img.shields.io/badge/GitHub-@juliabacchi1%2Flanding--julia-black?logo=github)](https://github.com/juliabacchi1/landing-julia)
+
+![Screenshot do Site](./public/screenshot.webp)
+
+---
+
+## 🛠️ Tecnologias
+
+- [Next.js](https://nextjs.org/)
+- [React](https://reactjs.org/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [Framer Motion](https://www.framer.com/motion/)
+- [Lucide Icons](https://lucide.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Sanity CMS](https://www.sanity.io/)
+
+---
+
+## 🚀 Como rodar localmente
 
 ```bash
+git clone https://github.com/juliabacchi1/landing-julia.git
+cd landing-julia
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Antes de rodar, crie um arquivo `.env.local` com as variáveis necessárias para conexão com o CMS (Sanity)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+.env.example
+```bash
+SANITY_PROJECT_ID=
+SANITY_DATASET=
+SANITY_API_VERSION=
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## ✨ Funcionalidades
+- 🧲 Hero com chamada para ação dupla (WhatsApp e explorações)
+- 💡 Seção "Como Funciona" com ícones e explicações simples
+- 🎯 Benefícios destacados com texto direto e visual leve
+- 💸 Tabela de Planos clara e focada em conversão
+- 🗣️ Depoimentos reais (com CMS)
+- ❓ Seção de FAQ com respostas claras para dúvidas comuns dos clientes
+- 💬 Contato com formulário para envio ao e-mail
+- 🧑‍💻 CMS via Sanity para editar textos e imagens sem precisar de código
+- 🌈 Animações suaves e microinterações com Framer Motion
+- 📱 100% responsiva, pensada pra funcionar bem no celular e no desktop
 
-To learn more about Next.js, take a look at the following resources:
+## 📂 Estrutura do projeto
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+src/
+├── app/
+│   ├── components/
+│   │   ├── HeroSection.tsx
+│   │   ├── BenefitsSection.tsx
+│   │   ├── HowItWorksSection.tsx
+│   │   ├── PlansSection.tsx
+│   │   ├── TestimonialsSection.tsx
+│   │   ├── ContactSection.tsx
+│   │   └── Navbar.tsx
+│   ├── layout.tsx
+│   └── page.tsx
+├── lib/
+│   └── sanity.ts
+└── public/
+    └── screenshot-landing.webp
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🧩 Propósito
+Essa é a minha vitrine digital – o lugar onde mostro aos clientes o que posso entregar: sites funcionais, bonitos, estratégicos e prontos pra converter.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🙋‍♀️ Feito por
+Julia Bacchi – apaixonada por web moderna, design com propósito e experiências que encantam pessoas e vendem ideias.
+[LinkedIn](https://www.linkedin.com/in/juliabacchi/) | [Portfólio](https://juliabacchi.com)
