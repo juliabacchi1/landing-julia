@@ -33,9 +33,9 @@ npm install
 npm run dev
 ```
 
-## 📄 Antes de rodar, crie um arquivo `.env.local` com as variáveis necessárias para conexão com o CMS (Sanity)
+Antes de rodar, crie um arquivo `.env.local` com as variáveis necessárias para conexão com o CMS (Sanity)
 
-# .env.example
+.env.example
 ```bash
 SANITY_PROJECT_ID=
 SANITY_DATASET=
