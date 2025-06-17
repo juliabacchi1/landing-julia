@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import Navbar from "./components/Navbar";
+import WhatsAppButton from "./components/WhatsAppButton";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -92,6 +93,7 @@ export default function RootLayout({
       <body>
         <Navbar />
         {children}
+        <WhatsAppButton />
       </body>
     </html>
   );
