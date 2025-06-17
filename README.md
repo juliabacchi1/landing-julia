@@ -1,4 +1,4 @@
-# Landing Pages – JuliaBacchi
+# Landing Page Oficial
 
 **landings-julia** é a minha **landing page oficial**, criada para apresentar meus serviços de desenvolvimento de sites e landings personalizadas. Pensada para conversão e experiência do usuário, ela mostra como eu trabalho: com foco em design estratégico, conteúdo bem estruturado e tecnologia moderna.
 Desenvolvida com **Next.js, TailwindCSS e Sanity CMS**, é um exemplo real de entrega profissional.
@@ -6,7 +6,7 @@ Desenvolvida com **Next.js, TailwindCSS e Sanity CMS**, é um exemplo real de en
 [![License](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)  
 [![Tech Stack](https://img.shields.io/badge/Tech%20Stack-Next.js%20%7C%20React%20%7C%20Tailwind-blue)](https://nextjs.org/)  
 [![Deploy](https://img.shields.io/badge/Deploy-Vercel-purple)](https://landings-julia.vercel.app)  
-[![GitHub](https://img.shields.io/badge/GitHub-@juliabacchi1%2Fportfolio-black?logo=github)](https://github.com/juliabacchi1/landing-julia)
+[![GitHub](https://img.shields.io/badge/GitHub-@juliabacchi1%2Flanding--julia-black?logo=github)](https://github.com/juliabacchi1/landing-julia)
 
 ![Screenshot do Site](./public/screenshot.webp)
 
@@ -33,7 +33,7 @@ npm install
 npm run dev
 ```
 
-## Antes de rodar, crie um arquivo `.env.local` com as variáveis necessárias para conexão com o CMS (Sanity)
+## 📄 Antes de rodar, crie um arquivo `.env.local` com as variáveis necessárias para conexão com o CMS (Sanity)
 
 # .env.example
 ```bash
@@ -78,7 +78,7 @@ src/
 ```
 
 ## 🧩 Propósito
-Esse site foi criado para ser minha vitrine digital. É aqui que mostro aos clientes o que eu posso entregar: um site funcional, bonito, estratégico e pronto pra conversão. É também um exemplo real do meu trabalho, com conteúdo editável por CMS e foco em performance.
+Essa é a minha vitrine digital – o lugar onde mostro aos clientes o que posso entregar: sites funcionais, bonitos, estratégicos e prontos pra converter.
 
 ## 🙋‍♀️ Feito por
 Julia Bacchi – apaixonada por web moderna, design com propósito e experiências que encantam pessoas e vendem ideias.
