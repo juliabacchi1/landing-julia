@@ -6,6 +6,7 @@ import { heroQuery } from "../../../queries/hero";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { event } from "../../../lib/gtag";
 
 type HeroData = {
   title: string;
@@ -21,6 +22,22 @@ type HeroData = {
     };
     alt: string;
   };
+};
+
+const handleClickVerPlanos = () => {
+  event({
+    action: "click_cta_hero",
+    category: "engajamento",
+    label: "Botão 'Ver Planos'",
+  });
+};
+
+const handleClickComoFunciona = () => {
+  event({
+    action: "click_cta_hero",
+    category: "engajamento",
+    label: "Botão 'Como Funciona'",
+  });
 };
 
 export default function Hero() {
@@ -69,6 +86,7 @@ export default function Hero() {
               {hero.ctaLink ? (
                 <Link
                   href={hero.ctaLink}
+                  onClick={handleClickVerPlanos}
                   className="bg-gradient-to-r from-primary to-secondary text-white font-semibold px-8 py-3 rounded-full text-center transition-all hover:opacity-90"
                 >
                   {hero.ctaText}
@@ -85,6 +103,7 @@ export default function Hero() {
               {hero.ctaLinkTwo ? (
                 <Link
                   href={hero.ctaLinkTwo}
+                  onClick={handleClickComoFunciona}
                   className="border-2 border-primary text-primary font-semibold px-8 py-3 rounded-full text-center transition-all hover:bg-primary hover:text-white"
                 >
                   {hero.ctaTextTwo}

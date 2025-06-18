@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { client } from "../../../lib/sanity";
 import { ctaQuery } from "../../../queries/cta";
+import { event } from "../../../lib/gtag";
 
 type FormField = {
   label: string;
@@ -67,54 +68,61 @@ export default function CtaSection() {
     setFormData((prev) => ({ ...prev, [name]: checked }));
   };
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setIsSubmitting(true);
-  setSubmitStatus("idle");
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
 
-  try {
-    const formDataToSend = new FormData();
+    try {
+      const formDataToSend = new FormData();
 
-    for (const key in formData) {
-      formDataToSend.append(key, String(formData[key]));
-    }
-
-    // Antispam: campo invisível
-    formDataToSend.append("_honey", "");
-    formDataToSend.append("_captcha", "false");
-
-    // Envia pro FormSubmit com seu e-mail
-    const response = await fetch(
-      "https://formsubmit.co/ajax/juliabacchi92@gmail.com",
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-        },
-        body: formDataToSend,
+      for (const key in formData) {
+        formDataToSend.append(key, String(formData[key]));
       }
-    );
 
-    if (response.ok) {
-      setSubmitStatus("success");
-      // Resetar formulário após sucesso
-      if (data) {
-        const resetState: Record<string, string | boolean> = {};
-        data.formFields.forEach((field) => {
-          resetState[field.name] = field.type === "checkbox" ? false : "";
+      // Antispam: campo invisível
+      formDataToSend.append("_honey", "");
+      formDataToSend.append("_captcha", "false");
+
+      // Envia pro FormSubmit com seu e-mail
+      const response = await fetch(
+        "https://formsubmit.co/ajax/juliabacchi92@gmail.com",
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+          },
+          body: formDataToSend,
+        }
+      );
+
+      if (response.ok) {
+        setSubmitStatus("success");
+
+        event({
+          action: "submit_formulario",
+          category: "conversao",
+          label: "Formulario - CtaSection",
         });
-        setFormData(resetState);
+
+        // Resetar formulário após sucesso
+        if (data) {
+          const resetState: Record<string, string | boolean> = {};
+          data.formFields.forEach((field) => {
+            resetState[field.name] = field.type === "checkbox" ? false : "";
+          });
+          setFormData(resetState);
+        }
+      } else {
+        setSubmitStatus("error");
       }
-    } else {
+    } catch (error) {
+      console.error("Erro no envio do formulário:", error);
       setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
     }
-  } catch (error) {
-    console.error("Erro no envio do formulário:", error);
-    setSubmitStatus("error");
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+  };
 
   if (!data) return null;
 

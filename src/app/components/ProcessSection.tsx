@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { client } from "../../../lib/sanity";
 import { processQuery } from "../../../queries/process";
 import Link from "next/link";
+import { event } from "../../../lib/gtag";
 
 type ProcessData = {
   title: string;
@@ -16,6 +17,14 @@ type ProcessData = {
   }>;
   ctaText: string;
   ctaLink: string;
+};
+
+const handleClickQueroLanding = () => {
+  event({
+    action: "click_cta_process",
+    category: "engajamento",
+    label: "Quero minha landing page",
+  });
 };
 
 export default function ProcessSection() {
@@ -72,6 +81,7 @@ export default function ProcessSection() {
         >
           <Link
             href={data.ctaLink}
+            onClick={handleClickQueroLanding}
             className="bg-gradient-to-r from-primary to-secondary text-white font-semibold px-8 py-3 rounded-full inline-block transition-all hover:opacity-90"
           >
             {data.ctaText}
