@@ -57,6 +57,11 @@ export default function RootLayout({
     <html lang="pt-BR" className={montserrat.variable}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* Google Search Console */}
+        <meta
+          name="google-site-verification"
+          content="4xv1yyEjDeOaYvvkUgzOtfPkYBhTjSDKbu4_hVldXOo"
+        />
         {/* Título no iOS */}
         <meta name="apple-mobile-web-app-title" content="Julia Bacchi" />
         <meta name="application-name" content="Julia Bacchi" />
