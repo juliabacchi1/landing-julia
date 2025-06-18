@@ -6,6 +6,7 @@ import { heroQuery } from "../../../queries/hero";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { event } from "../../../lib/gtag";
 
 type HeroData = {
   title: string;

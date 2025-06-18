@@ -4,7 +4,8 @@ import { Montserrat } from "next/font/google";
 import Navbar from "./components/Navbar";
 import WhatsAppButton from "./components/WhatsAppButton";
 import Script from "next/script";
-import GAListener from "./components/GAListener";
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -54,31 +55,6 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={montserrat.variable}>
       <head>
-        {/* Script GA */}
-        {process.env.NEXT_PUBLIC_GA_ID && (
-          <>
-            <Script
-              strategy="afterInteractive"
-              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
-            />
-            <Script
-              id="google-analytics"
-              strategy="afterInteractive"
-              dangerouslySetInnerHTML={{
-                __html: `
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
-            page_path: window.location.pathname,
-            debug_mode: ${process.env.NODE_ENV === "development"}
-          });
-        `,
-              }}
-            />
-          </>
-        )}
-
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* Título no iOS */}
         <meta name="apple-mobile-web-app-title" content="Julia Bacchi" />
@@ -116,10 +92,34 @@ export default function RootLayout({
           sizes="512x512"
           href="/favicon/favicon-512x512.png"
         />
+
+        {/* Script GA */}
+        {GA_ID && (
+          <>
+            <Script
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+            />
+            <Script
+              id="google-analytics"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${GA_ID}', {
+            page_path: window.location.pathname,
+            debug_mode: ${process.env.NODE_ENV === "development"}
+          });
+        `,
+              }}
+            />
+          </>
+        )}
       </head>
       <body>
         <Navbar />
-        <GAListener />
         {children}
         <WhatsAppButton />
       </body>
