@@ -4,6 +4,7 @@ import { Montserrat } from "next/font/google";
 import Navbar from "./components/Navbar";
 import WhatsAppButton from "./components/WhatsAppButton";
 import Script from "next/script";
+import Analytics from "./components/Analytics";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
@@ -122,6 +123,7 @@ export default function RootLayout({
         <Navbar />
         {children}
         <WhatsAppButton />
+        <Analytics />
       </body>
     </html>
   );
