@@ -11,6 +11,7 @@ export default function Analytics() {
     if (window.gtag && GA_TRACKING_ID) {
       window.gtag("config", GA_TRACKING_ID, {
         page_path: pathname,
+        page_title: document.title,
       });
     }
   }, [pathname]);
