@@ -1,6 +1,7 @@
 import { client } from "../../../../../lib/sanity";
 import { PortableText } from "@portabletext/react";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 
 type Props = {
   params: { slug: string };
@@ -20,10 +21,12 @@ export default async function PostPage({ params }: Props) {
       <p className="text-gray-600 mb-6">{post.description}</p>
 
       {post.icon && (
-        <img
+        <Image
           src={post.icon}
           alt="Ícone do post"
-          className="w-20 h-20 object-contain mb-6"
+          width={100}
+          height={100}
+          className="object-contain mb-6"
         />
       )}
 

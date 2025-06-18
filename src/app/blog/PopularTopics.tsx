@@ -8,6 +8,18 @@ import Image from "next/image";
 
 type TagColor = "primary" | "secondary";
 
+interface Topic {
+  title: string;
+  slug: { current: string };
+  description: string;
+  category: string;
+  badge?: string;
+  author: string;
+  letter: string;
+  tagColor: "primary" | "secondary";
+  icon?: string;
+}
+
 const tagColorsClasses: Record<
   TagColor,
   { bgLight: string; text: string; bgSolid: string }
@@ -25,7 +37,7 @@ const tagColorsClasses: Record<
 };
 
 export default function PopularTopics() {
-  const [topics, setTopics] = useState<any[]>([]);
+  const [topics, setTopics] = useState<Topic[]>([]);
 
   useEffect(() => {
     fetchPopularTopics().then(setTopics);
@@ -52,9 +64,9 @@ export default function PopularTopics() {
                 {topic.icon && (
                   <Image
                     src={topic.icon}
-                    alt=""
-                    width={100} // ajusta o tamanho que fizer sentido pra você
-                    height={100} // idem
+                    alt={topic.title}
+                    width={600} // ajusta o tamanho que fizer sentido pra você
+                    height={400} // idem
                     className="object-contain"
                   />
                 )}
