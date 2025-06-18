@@ -2,12 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import Link from "next/link";
+import { motion } from "framer-motion";
 
 const navLinks = [
-  { href: "#beneficios", label: "Benefícios" },
-  { href: "#como-funciona", label: "Como funciona" },
-  { href: "#planos", label: "Planos" },
-  { href: "#depoimentos", label: "Depoimentos" },
+  { href: "/#beneficios", label: "Benefícios" },
+  { href: "/#como-funciona", label: "Como funciona" },
+  { href: "/#planos", label: "Planos" },
+  { href: "/#depoimentos", label: "Depoimentos" },
+  { href: "/blog", label: "Blog" },
 ];
 
 export default function Navbar() {
@@ -29,20 +32,51 @@ export default function Navbar() {
       }`}
     >
       <nav className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center mt-4 md:mt-0">
-        <a href="#hero" className="text-2xl font-bold text-primary">
-          Julia<span className="text-secondary">Bacchi</span>
-        </a>
+        <Link
+          href="/#hero"
+          className="text-2xl font-bold text-primary flex items-center space-x-1 transition-all duration-300"
+        >
+          <span className="inline-flex overflow-hidden">
+            <span>J</span>
+            <motion.span
+              animate={{
+                x: scrolled ? -20 : 0,
+                opacity: scrolled ? 0 : 1,
+                width: scrolled ? 0 : "auto",
+              }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+              className="inline-block"
+            >
+              ulia
+            </motion.span>
+          </span>
+
+          <span className="inline-flex overflow-hidden text-secondary">
+            <span>B</span>
+            <motion.span
+              animate={{
+                x: scrolled ? -20 : 0,
+                opacity: scrolled ? 0 : 1,
+                width: scrolled ? 0 : "auto",
+              }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+              className="inline-block"
+            >
+              acchi
+            </motion.span>
+          </span>
+        </Link>
 
         {/* desktop menu */}
         <ul className="hidden md:flex gap-8 text-gray-800 font-medium">
           {navLinks.map((link) => (
             <li key={link.href}>
-              <a
+              <Link
                 href={link.href}
                 className="hover:text-primary transition-colors"
               >
                 {link.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -75,13 +109,13 @@ export default function Navbar() {
           <ul className="flex flex-col gap-4 text-gray-800 font-medium">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <a
+                <Link
                   href={link.href}
                   onClick={() => setIsOpen(false)}
                   className="block py-2 border-b border-gray-100 hover:text-primary transition-colors"
                 >
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
