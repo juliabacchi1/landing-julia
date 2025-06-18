@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://landings-julia.vercel.app
+
+# Sitemaps
+Sitemap: https://landings-julia.vercel.app/sitemap.xml
