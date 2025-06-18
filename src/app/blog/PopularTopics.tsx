@@ -4,6 +4,7 @@ import { ArrowRight, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { fetchPopularTopics } from "../../../lib/fetchPosts";
+import Image from "next/image";
 
 type TagColor = "primary" | "secondary";
 
@@ -49,10 +50,12 @@ export default function PopularTopics() {
                 } h-48 flex items-center justify-center`}
               >
                 {topic.icon && (
-                  <img
+                  <Image
                     src={topic.icon}
                     alt=""
-                    className="w-1/3 h-1/3 object-contain"
+                    width={100} // ajusta o tamanho que fizer sentido pra você
+                    height={100} // idem
+                    className="object-contain"
                   />
                 )}
               </div>
