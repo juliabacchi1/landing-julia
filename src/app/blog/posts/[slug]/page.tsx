@@ -1,13 +1,45 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { client } from "../../../../../lib/sanity";
 import { PortableText } from "@portabletext/react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 
-type Props = {
-  params: { slug: string };
-};
+// Gera todas as páginas de post
+export async function generateStaticParams() {
+  const slugs = await client.fetch(
+    `*[_type == "post"]{ "slug": slug.current }`
+  );
+  return slugs.map((item: { slug: string }) => ({ slug: item.slug }));
+}
 
-export default async function PostPage({ params }: Props) {
+// Gera metadados dinâmicos por post
+export async function generateMetadata({ params }: any) {
+  const post = await client.fetch(
+    `*[_type == "post" && slug.current == $slug][0]`,
+    { slug: params.slug }
+  );
+
+  if (!post) return {};
+
+  return {
+    title: post.title,
+    description: post.description,
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      images: [post.icon || "/og-image.jpg"],
+    },
+    twitter: {
+      title: post.title,
+      description: post.description,
+      images: [post.icon || "/og-image.jpg"],
+    },
+  };
+}
+
+// Página do post com any para evitar erro de tipagem
+export default async function PostPage({ params }: any) {
   const post = await client.fetch(
     `*[_type == "post" && slug.current == $slug][0]`,
     { slug: params.slug }

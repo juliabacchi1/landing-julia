@@ -16,6 +16,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://landings-julia.vercel.app"),
   title: "Landing pages que convertem | Julia Bacchi",
   description:
     "Landing pages profissionais e estratégicas para transformar visitantes em clientes. Design, copy e performance feitos sob medida para o seu negócio.",
