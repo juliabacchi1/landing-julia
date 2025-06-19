@@ -1,23 +1,21 @@
 "use client";
 
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown, Flame, Users, Code } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { fetchPopularTopics } from "../../../lib/fetchPosts";
-import Image from "next/image";
 
 type TagColor = "primary" | "secondary";
 
 interface Topic {
   title: string;
-  slug: { current: string };
+  slug: string;
   description: string;
   category: string;
   badge?: string;
   author: string;
   letter: string;
-  tagColor: "primary" | "secondary";
-  icon?: string;
+  tagColor: TagColor;
+  icon: "flame" | "users" | "code";
 }
 
 const tagColorsClasses: Record<
@@ -36,11 +34,55 @@ const tagColorsClasses: Record<
   },
 };
 
+const mockTopics: Topic[] = [
+  {
+    title: "Burnout e saúde mental de devs",
+    slug: "burnout-e-saude-mental",
+    description: "Como lidar com a pressão do dia a dia no mundo do código.",
+    category: "Saúde",
+    badge: "Em alta",
+    author: "Ju Bacchi",
+    letter: "J",
+    tagColor: "primary",
+    icon: "flame",
+  },
+  {
+    title: "Mulheres na tecnologia",
+    slug: "mulheres-na-tecnologia",
+    description: "Inspiração e representatividade na área tech.",
+    category: "Comunidade",
+    badge: "Novo",
+    author: "Ju Bacchi",
+    letter: "J",
+    tagColor: "secondary",
+    icon: "users",
+  },
+  {
+    title: "Como aprendi React em 7 dias",
+    slug: "aprendi-react-em-7-dias",
+    description:
+      "Minha jornada intensa com React, o que funcionou e o que não.",
+    category: "Front-end",
+    badge: "Destaque",
+    author: "Ju Bacchi",
+    letter: "J",
+    tagColor: "primary",
+    icon: "code",
+  },
+];
+
+const iconMap = {
+  flame: <Flame className="w-16 h-16 text-primary" />,
+  users: <Users className="w-16 h-16 text-secondary" />,
+  code: <Code className="w-16 h-16 text-primary" />,
+};
+
 export default function PopularTopics() {
   const [topics, setTopics] = useState<Topic[]>([]);
 
   useEffect(() => {
-    fetchPopularTopics().then(setTopics);
+    // Simulando fetch dos dados mockados
+    setTopics(mockTopics);
   }, []);
 
   return (
@@ -58,28 +100,17 @@ export default function PopularTopics() {
             >
               <div
                 className={`${
-                  tagColorsClasses[topic.tagColor as TagColor]?.bgLight || ""
+                  tagColorsClasses[topic.tagColor]?.bgLight
                 } h-48 flex items-center justify-center`}
               >
-                {topic.icon && (
-                  <Image
-                    src={topic.icon}
-                    alt={topic.title}
-                    width={600} // ajusta o tamanho que fizer sentido pra você
-                    height={400} // idem
-                    className="object-contain"
-                  />
-                )}
+                {iconMap[topic.icon]}
               </div>
               <div className="p-6">
                 <div className="flex items-center mb-3">
                   <span
                     className={`${
-                      tagColorsClasses[topic.tagColor as TagColor]?.bgLight ||
-                      ""
-                    } ${
-                      tagColorsClasses[topic.tagColor as TagColor]?.text || ""
-                    } text-xs font-semibold px-3 py-1 rounded-full`}
+                      tagColorsClasses[topic.tagColor]?.bgLight
+                    } ${tagColorsClasses[topic.tagColor]?.text} text-xs font-semibold px-3 py-1 rounded-full`}
                   >
                     {topic.category}
                   </span>
@@ -94,8 +125,7 @@ export default function PopularTopics() {
                 <div className="flex items-center">
                   <div
                     className={`${
-                      tagColorsClasses[topic.tagColor as TagColor]?.bgSolid ||
-                      ""
+                      tagColorsClasses[topic.tagColor]?.bgSolid
                     } w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm`}
                   >
                     {topic.letter}
@@ -104,7 +134,7 @@ export default function PopularTopics() {
                     {topic.author}
                   </p>
                   <Link
-                    href={`/blog/posts/${topic.slug.current}`}
+                    href={`/blog/posts/${topic.slug}`}
                     className="ml-auto text-primary hover:text-purple-700 font-medium text-sm flex items-center"
                   >
                     Ler mais <ArrowRight className="h-4 w-4 ml-1" />

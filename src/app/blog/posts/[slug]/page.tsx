@@ -1,70 +1,89 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-import { client } from "../../../../../lib/sanity";
-import { PortableText } from "@portabletext/react";
+import { fetchPostBySlug } from "../../../../../lib/fetchPosts";
+import { fetchAllSlugs } from "../../../../../lib/fetchPosts";
 import { notFound } from "next/navigation";
-import Image from "next/image";
+import PostContent from "../../PostContent";
+import type { Post } from "../../../../../lib/types";
+import {
+  Flame,
+  Users,
+  Code,
+  Camera,
+  Heart,
+  Star,
+  Coffee,
+  Book,
+  Bell,
+  Zap,
+} from "lucide-react";
 
-// Gera todas as páginas de post
-export async function generateStaticParams() {
-  const slugs = await client.fetch(
-    `*[_type == "post"]{ "slug": slug.current }`
-  );
-  return slugs.map((item: { slug: string }) => ({ slug: item.slug }));
-}
+type Props = {
+  params: Promise<{ slug: string }>;
+};
 
-// Gera metadados dinâmicos por post
-export async function generateMetadata({ params }: any) {
-  const post = await client.fetch(
-    `*[_type == "post" && slug.current == $slug][0]`,
-    { slug: params.slug }
-  );
+const iconsMap = {
+  flame: Flame,
+  users: Users,
+  code: Code,
+  camera: Camera,
+  heart: Heart,
+  star: Star,
+  coffee: Coffee,
+  book: Book,
+  bell: Bell,
+  zap: Zap,
+};
 
-  if (!post) return {};
+export default async function PostPage({ params }: Props) {
+  const { slug } = await params;
 
-  return {
-    title: post.title,
-    description: post.description,
-    openGraph: {
-      title: post.title,
-      description: post.description,
-      images: [post.icon || "/og-image.jpg"],
-    },
-    twitter: {
-      title: post.title,
-      description: post.description,
-      images: [post.icon || "/og-image.jpg"],
-    },
-  };
-}
+  const post: Post | null = await fetchPostBySlug(slug);
 
-// Página do post com any para evitar erro de tipagem
-export default async function PostPage({ params }: any) {
-  const post = await client.fetch(
-    `*[_type == "post" && slug.current == $slug][0]`,
-    { slug: params.slug }
-  );
+  if (!post) {
+    return notFound();
+  }
 
-  if (!post) return notFound();
+  const iconKey =
+    typeof post.icon === "string" ? post.icon.trim().toLowerCase() : "";
+
+  const IconComponent = iconsMap[iconKey as keyof typeof iconsMap];
 
   return (
-    <article className="max-w-3xl mx-auto py-12 px-4">
-      <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
-      <p className="text-gray-600 mb-6">{post.description}</p>
-
-      {post.icon && (
-        <Image
-          src={post.icon}
-          alt="Ícone do post"
-          width={100}
-          height={100}
-          className="object-contain mb-6"
-        />
-      )}
-
-      <div className="prose prose-lg max-w-none">
-        <PortableText value={post.content} />
-      </div>
-    </article>
+    <main className="max-w-3xl mx-auto px-4 py-12">
+      <header className="mb-6 flex flex-col items-start gap-4">
+        {IconComponent ? (
+          <IconComponent size={80} className="text-primary" />
+        ) : (
+          <span className="italic text-sm text-gray-400">
+            Ícone não encontrado
+          </span>
+        )}
+        <h1 className="text-4xl font-bold text-gray-900 mb-2">{post.title}</h1>
+        <p className="text-gray-600 text-lg mb-4">{post.description}</p>
+        <div className="flex items-center gap-4 text-sm text-gray-700">
+          <span>
+            Autor: {post.author} ({post.letter})
+          </span>
+          <span>Categoria: {post.category}</span>
+          {post.badge && (
+            <span
+              className={`px-2 py-1 rounded text-white ${
+                post.tagColor === "primary" ? "bg-blue-600" : "bg-gray-600"
+              }`}
+            >
+              {post.badge}
+            </span>
+          )}
+        </div>
+      </header>
+      <PostContent value={post.content} />
+    </main>
   );
+}
+
+export async function generateStaticParams() {
+  const slugs = await fetchAllSlugs();
+
+  return slugs.map((slug: string) => ({
+    slug,
+  }));
 }

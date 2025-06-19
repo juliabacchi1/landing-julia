@@ -1,11 +1,14 @@
-export const getPopularTopicsQuery = `*[_type == "post"] | order(_createdAt desc)[0...6] {
-  title,
-  slug,
-  description,
-  category,
-  badge,
-  author,
-  letter,
-  tagColor,
-  "icon": icon.asset->url
-}`;
+import groq from "groq";
+
+export const getPostBySlugQuery = (slug: string) =>
+  groq`*[_type == "post" && slug.current == $slug][0]{
+    title,
+    description,
+    category,
+    badge,
+    author,
+    letter,
+    tagColor,
+    icon,
+    content
+  }`;

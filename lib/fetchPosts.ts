@@ -1,6 +1,15 @@
 import { client } from "./sanity";
-import { getPopularTopicsQuery } from "../queries/posts";
+import { getPostBySlugQuery } from "../queries/posts";
+import groq from "groq";
+import { Post } from "./types";
 
-export async function fetchPopularTopics() {
-  return await client.fetch(getPopularTopicsQuery);
+export async function fetchPostBySlug(slug: string): Promise<Post | null> {
+  const query = getPostBySlugQuery(slug);
+  const data = await client.fetch(query, { slug });
+  return data || null;
+}
+
+export async function fetchAllSlugs(): Promise<string[]> {
+  const query = groq`*[_type == "post" && defined(slug.current)][].slug.current`;
+  return await client.fetch(query);
 }
