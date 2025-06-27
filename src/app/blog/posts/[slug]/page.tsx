@@ -67,7 +67,9 @@ export default async function PostPage({ params }: Props) {
           <p className="text-lg text-gray-600 mb-6">{post.description}</p>
           {/* Autor, Categoria e Badge */}
           <div className="flex items-center gap-4 mb-8">
-            <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg">
+            <div
+              className={`w-12 h-12 rounded-full ${color.bgSolid} text-white flex items-center justify-center font-bold text-lg`}
+            >
               {post.letter}
             </div>
             <div>
@@ -87,7 +89,7 @@ export default async function PostPage({ params }: Props) {
       </section>
 
       {/* Conteúdo */}
-      <section className="container mx-auto max-w-3xl px-4 py-12">
+      <section className="container mx-auto max-w-4xl px-4 py-12">
         <PostContent value={post.content} />
 
         <div className="py-8 text-center">
