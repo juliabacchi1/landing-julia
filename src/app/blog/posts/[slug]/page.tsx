@@ -4,34 +4,10 @@ import PostContent from "../../PostContent";
 import type { Post } from "../../../../../lib/types";
 import { tagColorsClasses } from "../../../../../lib/tagColors";
 import Link from "next/link";
-import {
-  Flame,
-  Users,
-  Code,
-  Camera,
-  Heart,
-  Star,
-  Coffee,
-  Book,
-  Bell,
-  Zap,
-} from "lucide-react";
+import Icon from "@/app/components/Icon";
 
 type Props = {
   params: Promise<{ slug: string }>;
-};
-
-const iconsMap = {
-  flame: Flame,
-  users: Users,
-  code: Code,
-  camera: Camera,
-  heart: Heart,
-  star: Star,
-  coffee: Coffee,
-  book: Book,
-  bell: Bell,
-  zap: Zap,
 };
 
 export default async function PostPage({ params }: Props) {
@@ -43,12 +19,10 @@ export default async function PostPage({ params }: Props) {
     return notFound();
   }
 
-  const color = tagColorsClasses[post.tagColor];
+  const color = tagColorsClasses[post.tagColor] ?? tagColorsClasses["primary"];
 
   const iconKey =
     typeof post.icon === "string" ? post.icon.trim().toLowerCase() : "";
-
-  const IconComponent = iconsMap[iconKey as keyof typeof iconsMap];
 
   return (
     <main className="bg-white py-16">
@@ -102,13 +76,7 @@ export default async function PostPage({ params }: Props) {
           <div
             className={`w-full h-60 rounded-xl mb-8 flex items-center justify-center ${color.bgLight}`}
           >
-            {IconComponent ? (
-              <IconComponent size={64} className={color.text} />
-            ) : (
-              <span className="italic text-sm text-white">
-                Ícone não encontrado
-              </span>
-            )}
+            <Icon name={post.icon} size={64} className={color.text} />
           </div>
         </div>
       </section>

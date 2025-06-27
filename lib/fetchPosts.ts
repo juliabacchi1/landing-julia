@@ -13,3 +13,20 @@ export async function fetchAllSlugs(): Promise<string[]> {
   const query = groq`*[_type == "post" && defined(slug.current)][].slug.current`;
   return await client.fetch(query);
 }
+
+export async function fetchAllPosts(): Promise<Post[]> {
+  const query = groq`
+    *[_type == "post"][]{
+      title,
+      description,
+      category,
+      badge,
+      author,
+      letter,
+      tagColor,
+      icon,
+      "slug": slug.current
+    }
+  `;
+  return await client.fetch(query);
+}

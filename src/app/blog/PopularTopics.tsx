@@ -1,89 +1,28 @@
 "use client";
 
-import { ArrowRight, ChevronDown, Flame, Users, Code } from "lucide-react";
-import Link from "next/link";
 import { useEffect, useState } from "react";
-
-type TagColor = "primary" | "secondary";
-
-interface Topic {
-  title: string;
-  slug: string;
-  description: string;
-  category: string;
-  badge?: string;
-  author: string;
-  letter: string;
-  tagColor: TagColor;
-  icon: "flame" | "users" | "code";
-}
-
-const tagColorsClasses: Record<
-  TagColor,
-  { bgLight: string; text: string; bgSolid: string }
-> = {
-  primary: {
-    bgLight: "bg-primary/10",
-    text: "text-primary",
-    bgSolid: "bg-primary",
-  },
-  secondary: {
-    bgLight: "bg-secondary/10",
-    text: "text-secondary",
-    bgSolid: "bg-secondary",
-  },
-};
-
-const mockTopics: Topic[] = [
-  {
-    title: "Burnout e saúde mental de devs",
-    slug: "burnout-e-saude-mental",
-    description: "Como lidar com a pressão do dia a dia no mundo do código.",
-    category: "Saúde",
-    badge: "Em alta",
-    author: "Ju Bacchi",
-    letter: "J",
-    tagColor: "primary",
-    icon: "flame",
-  },
-  {
-    title: "Mulheres na tecnologia",
-    slug: "mulheres-na-tecnologia",
-    description: "Inspiração e representatividade na área tech.",
-    category: "Comunidade",
-    badge: "Novo",
-    author: "Ju Bacchi",
-    letter: "J",
-    tagColor: "secondary",
-    icon: "users",
-  },
-  {
-    title: "Como aprendi React em 7 dias",
-    slug: "aprendi-react-em-7-dias",
-    description:
-      "Minha jornada intensa com React, o que funcionou e o que não.",
-    category: "Front-end",
-    badge: "Destaque",
-    author: "Ju Bacchi",
-    letter: "J",
-    tagColor: "primary",
-    icon: "code",
-  },
-];
-
-const iconMap = {
-  flame: <Flame className="w-16 h-16 text-primary" />,
-  users: <Users className="w-16 h-16 text-secondary" />,
-  code: <Code className="w-16 h-16 text-primary" />,
-};
+import Link from "next/link";
+import Icon from "../components/Icon";
+import { tagColorsClasses } from "../../../lib/tagColors";
+import { ArrowRight, ChevronDown } from "lucide-react";
+import { fetchAllPosts } from "../../../lib/fetchPosts";
+import type { Post } from "../../../lib/types";
 
 export default function PopularTopics() {
-  const [topics, setTopics] = useState<Topic[]>([]);
+  const [topics, setTopics] = useState<Post[]>([]);
+  const [visibleCount, setVisibleCount] = useState(3);
 
   useEffect(() => {
-    // Simulando fetch dos dados mockados
-    setTopics(mockTopics);
+    async function loadTopics() {
+      const posts = await fetchAllPosts();
+      setTopics(posts);
+    }
+    loadTopics();
   }, []);
+
+  function handleLoadMore() {
+    setVisibleCount((prev) => prev + 3);
+  }
 
   return (
     <section className="py-12 px-4 md:px-0">
@@ -93,24 +32,24 @@ export default function PopularTopics() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {topics.map((topic, i) => (
+          {topics.slice(0, visibleCount).map((topic, i) => (
             <div
               key={i}
               className="post-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300"
             >
               <div
-                className={`${
-                  tagColorsClasses[topic.tagColor]?.bgLight
-                } h-48 flex items-center justify-center`}
+                className={`${tagColorsClasses[topic.tagColor]?.bgLight} h-48 flex items-center justify-center`}
               >
-                {iconMap[topic.icon]}
+                <Icon
+                  name={topic.icon}
+                  size={64}
+                  className={tagColorsClasses[topic.tagColor]?.text}
+                />
               </div>
               <div className="p-6">
                 <div className="flex items-center mb-3">
                   <span
-                    className={`${
-                      tagColorsClasses[topic.tagColor]?.bgLight
-                    } ${tagColorsClasses[topic.tagColor]?.text} text-xs font-semibold px-3 py-1 rounded-full`}
+                    className={`${tagColorsClasses[topic.tagColor]?.bgLight} ${tagColorsClasses[topic.tagColor]?.text} text-xs font-semibold px-3 py-1 rounded-full`}
                   >
                     {topic.category}
                   </span>
@@ -124,9 +63,7 @@ export default function PopularTopics() {
                 </p>
                 <div className="flex items-center">
                   <div
-                    className={`${
-                      tagColorsClasses[topic.tagColor]?.bgSolid
-                    } w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm`}
+                    className={`${tagColorsClasses[topic.tagColor]?.bgSolid} w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm`}
                   >
                     {topic.letter}
                   </div>
@@ -145,12 +82,17 @@ export default function PopularTopics() {
           ))}
         </div>
 
-        <div className="mt-12 text-center">
-          <button className="bg-white border-2 border-primary text-primary hover:bg-primary hover:text-white font-medium py-3 px-8 rounded-full transition duration-300 flex items-center mx-auto">
-            Ver mais tópicos
-            <ChevronDown className="h-5 w-5 ml-2" />
-          </button>
-        </div>
+        {visibleCount < topics.length && (
+          <div className="mt-12 text-center">
+            <button
+              onClick={handleLoadMore}
+              className="bg-white border-2 border-primary text-primary hover:bg-primary hover:text-white font-medium py-3 px-8 rounded-full transition duration-300 flex items-center mx-auto"
+            >
+              Ver mais tópicos
+              <ChevronDown className="h-5 w-5 ml-2" />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
