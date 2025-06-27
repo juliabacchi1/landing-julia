@@ -44,7 +44,7 @@ export default function NewsletterForm() {
   };
 
   return (
-    <section className="py-16 px-4 md:px-0 bg-canvaGray">
+    <section className="py-16 px-4 md:px-0 bg-light">
       <div className="container mx-auto max-w-4xl">
         <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg relative overflow-hidden">
           {/* Decorações */}

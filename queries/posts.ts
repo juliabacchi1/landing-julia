@@ -10,5 +10,6 @@ export const getPostBySlugQuery = (slug: string) =>
     letter,
     tagColor,
     icon,
-    content
+    content,
+    publishedAt
   }`;

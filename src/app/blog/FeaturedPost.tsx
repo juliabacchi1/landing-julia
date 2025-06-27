@@ -46,11 +46,24 @@ export default function FeaturedPost() {
             </div>
             <div className="md:w-1/2 p-8 flex flex-col justify-between">
               <div>
-                <div className="flex items-center mb-4">
+                <div className="flex items-center mb-4 gap-4">
                   <span
                     className={`bg-secondary/10 text-secondary text-xs font-semibold px-3 py-1 rounded-full`}
                   >
                     {featured.category}
+                  </span>
+                  <span className="text-gray-400 text-xs">
+                    {featured.publishedAt &&
+                    !isNaN(new Date(featured.publishedAt).getTime())
+                      ? new Date(featured.publishedAt).toLocaleDateString(
+                          "pt-BR",
+                          {
+                            day: "2-digit",
+                            month: "long",
+                            year: "numeric",
+                          }
+                        )
+                      : "Sem data"}
                   </span>
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-dark">

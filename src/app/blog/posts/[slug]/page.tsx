@@ -28,11 +28,11 @@ export default async function PostPage({ params }: Props) {
       <div className="bg-graylight py-3 px-4 md:px-0">
         <div className="container mx-auto">
           <div className="flex items-center text-sm text-gray-500">
-            <Link href="/" className="hover:text-canvaPurple">
+            <Link href="/" className="hover:text-primary">
               Home
             </Link>
             <span className="mx-2">/</span>
-            <Link href="/blog" className="hover:text-canvaPurple">
+            <Link href="/blog" className="hover:text-primary">
               Blog
             </Link>
             <span className="mx-2">/</span>
@@ -43,7 +43,7 @@ export default async function PostPage({ params }: Props) {
 
       {/* Header do Post */}
       <section className="py-12 border-b">
-        <div className="container mx-auto max-w-3xl px-4">
+        <div className="container mx-auto max-w-4xl px-4">
           {/* Categoria + Data por extenso */}
           <div className="text-sm text-gray-500 mb-4">
             <span
@@ -51,7 +51,14 @@ export default async function PostPage({ params }: Props) {
             >
               {post.category}
             </span>
-            <span className="ml-2 text-gray-400">Publicado em TAL DATA</span>
+            <span className="ml-2 text-gray-400">
+              Publicado em{" "}
+              {new Date(post.publishedAt).toLocaleDateString("pt-BR", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })}
+            </span>
           </div>
           {/* Título e Descrição */}
           <h1 className="text-4xl font-bold text-gray-900 mb-4">

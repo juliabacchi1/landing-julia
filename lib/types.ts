@@ -12,4 +12,5 @@ export type Post = {
   tagColor: TagColor;
   letter: string;
   icon: string;
+  publishedAt: string;
 };
