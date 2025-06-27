@@ -82,17 +82,23 @@ export default function PopularTopics() {
           ))}
         </div>
 
-        {visibleCount < topics.length && (
-          <div className="mt-12 text-center">
-            <button
-              onClick={handleLoadMore}
-              className="bg-white border-2 border-primary text-primary hover:bg-primary hover:text-white font-medium py-3 px-8 rounded-full transition duration-300 flex items-center mx-auto"
-            >
-              Ver mais tópicos
-              <ChevronDown className="h-5 w-5 ml-2" />
-            </button>
-          </div>
-        )}
+        {/* Sempre mostrar o botão */}
+        <div className="mt-12 text-center">
+          <button
+            onClick={handleLoadMore}
+            disabled={visibleCount >= topics.length}
+            className={`border-2 font-medium py-3 px-8 rounded-full transition duration-300 flex items-center mx-auto
+      ${
+        visibleCount >= topics.length
+          ? "border-gray-300 text-gray-400 cursor-not-allowed bg-white"
+          : "border-primary text-primary hover:bg-primary hover:text-white"
+      }
+    `}
+          >
+            Ver mais tópicos
+            <ChevronDown className="h-5 w-5 ml-2" />
+          </button>
+        </div>
       </div>
     </section>
   );

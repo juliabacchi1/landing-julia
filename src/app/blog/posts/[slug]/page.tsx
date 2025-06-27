@@ -21,9 +21,6 @@ export default async function PostPage({ params }: Props) {
 
   const color = tagColorsClasses[post.tagColor] ?? tagColorsClasses["primary"];
 
-  const iconKey =
-    typeof post.icon === "string" ? post.icon.trim().toLowerCase() : "";
-
   return (
     <main className="bg-white py-16">
       {/* Breadcrumbs */}
