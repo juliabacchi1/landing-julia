@@ -5,6 +5,7 @@ import type { Post } from "../../../../../lib/types";
 import { tagColorsClasses } from "../../../../../lib/tagColors";
 import Link from "next/link";
 import Icon from "@/app/components/Icon";
+import Footer from "@/app/components/FooterSection";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -22,7 +23,7 @@ export default async function PostPage({ params }: Props) {
   const color = tagColorsClasses[post.tagColor] ?? tagColorsClasses["primary"];
 
   return (
-    <main className="bg-white py-16">
+    <main className="bg-white pt-16">
       {/* Breadcrumbs */}
       <div className="bg-graylight py-3 px-4 md:px-0">
         <div className="container mx-auto">
@@ -81,7 +82,32 @@ export default async function PostPage({ params }: Props) {
       {/* Conteúdo */}
       <section className="container mx-auto max-w-3xl px-4 py-12">
         <PostContent value={post.content} />
+
+        <div className="py-8 text-center">
+          <Link
+            href="/blog"
+            className="inline-flex items-center text-primary hover:text-purple-700 font-medium transition-colors duration-300"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 mr-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              />
+            </svg>
+            Voltar para o blog
+          </Link>
+        </div>
       </section>
+
+      <Footer />
     </main>
   );
 }

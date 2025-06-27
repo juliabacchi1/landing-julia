@@ -5,6 +5,7 @@ import PopularTopics from "./PopularTopics";
 import NewsletterForm from "./NewsletterForm";
 import RelatedResources from "./RelatedResources";
 import BackToSiteLink from "./BackToSiteLink";
+import Footer from "../components/FooterSection";
 
 export default function BlogPage() {
   return (
@@ -16,6 +17,7 @@ export default function BlogPage() {
       <NewsletterForm />
       <RelatedResources />
       <BackToSiteLink />
+      <Footer />
     </main>
   );
 }
