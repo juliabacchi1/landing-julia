@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
 const navLinks = [
@@ -16,6 +16,7 @@ const navLinks = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,6 +26,30 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleNavClick = async (href: string) => {
+    setIsOpen(false);
+
+    if (href.startsWith("/#")) {
+      const id = href.split("#")[1];
+      if (window.location.pathname !== "/") {
+        await router.push("/");
+
+        // Espera a navegação finalizar para rolar à âncora
+        setTimeout(() => {
+          const el = document.getElementById(id);
+          if (el) el.scrollIntoView({ behavior: "smooth" });
+        }, 500);
+      } else {
+        // Já está na home, faz só scroll suave
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      // Link normal (ex: /blog)
+      router.push(href);
+    }
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all ${
@@ -32,8 +57,12 @@ export default function Navbar() {
       }`}
     >
       <nav className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center mt-4 md:mt-0">
-        <Link
+        <a
           href="/#hero"
+          onClick={(e) => {
+            e.preventDefault();
+            handleNavClick("/#hero");
+          }}
           className="text-2xl font-bold text-primary flex items-center space-x-1 transition-all duration-300"
         >
           <span className="inline-flex overflow-hidden">
@@ -65,18 +94,22 @@ export default function Navbar() {
               acchi
             </motion.span>
           </span>
-        </Link>
+        </a>
 
         {/* desktop menu */}
         <ul className="hidden md:flex gap-8 text-gray-800 font-medium">
-          {navLinks.map((link) => (
-            <li key={link.href}>
-              <Link
-                href={link.href}
+          {navLinks.map(({ href, label }) => (
+            <li key={href}>
+              <a
+                href={href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavClick(href);
+                }}
                 className="hover:text-primary transition-colors"
               >
-                {link.label}
-              </Link>
+                {label}
+              </a>
             </li>
           ))}
         </ul>
@@ -107,15 +140,18 @@ export default function Navbar() {
       {isOpen && (
         <div className="md:hidden bg-white border-t border-gray-100 shadow-md px-6 pb-4">
           <ul className="flex flex-col gap-4 text-gray-800 font-medium">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
+            {navLinks.map(({ href, label }) => (
+              <li key={href}>
+                <a
+                  href={href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(href);
+                  }}
                   className="block py-2 border-b border-gray-100 hover:text-primary transition-colors"
                 >
-                  {link.label}
-                </Link>
+                  {label}
+                </a>
               </li>
             ))}
           </ul>
