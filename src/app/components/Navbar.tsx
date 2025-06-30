@@ -2,15 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
 const navLinks = [
-  { href: "/#beneficios", label: "Benefícios" },
-  { href: "/#como-funciona", label: "Como funciona" },
-  { href: "/#planos", label: "Planos" },
-  { href: "/#depoimentos", label: "Depoimentos" },
-  { href: "/blog", label: "Blog" },
+  { href: "/#beneficios", label: "Benefícios", isHash: true },
+  { href: "/#como-funciona", label: "Como funciona", isHash: true },
+  { href: "/#planos", label: "Planos", isHash: true },
+  { href: "/#depoimentos", label: "Depoimentos", isHash: true },
+  { href: "/blog", label: "Blog", isHash: false },
 ];
 
 const scrollToIdWithOffset = (id: string, offset = 40) => {
@@ -39,32 +40,28 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleNavClick = async (href: string) => {
+  const handleHashNav = async (href: string) => {
     setIsOpen(false);
     const id = href.split("#")[1];
-    const isMobile = window.innerWidth < 768; // Tailwind md breakpoint
+    const isMobile = window.innerWidth < 768;
 
-    if (href.startsWith("/#")) {
-      if (window.location.pathname !== "/") {
-        await router.push("/");
-        setTimeout(() => {
-          if (isMobile) {
-            scrollToIdWithOffset(id);
-          } else {
-            const el = document.getElementById(id);
-            if (el) el.scrollIntoView({ behavior: "smooth" });
-          }
-        }, 500);
-      } else {
+    if (window.location.pathname !== "/") {
+      await router.push("/");
+      setTimeout(() => {
         if (isMobile) {
           scrollToIdWithOffset(id);
         } else {
           const el = document.getElementById(id);
           if (el) el.scrollIntoView({ behavior: "smooth" });
         }
-      }
+      }, 500);
     } else {
-      router.push(href);
+      if (isMobile) {
+        scrollToIdWithOffset(id);
+      } else {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 
@@ -75,11 +72,12 @@ export default function Navbar() {
       }`}
     >
       <nav className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center mt-4 md:mt-0">
+        {/* Logo */}
         <a
           href="/#hero"
           onClick={(e) => {
             e.preventDefault();
-            handleNavClick("/#hero");
+            handleHashNav("/#hero");
           }}
           className="text-2xl font-bold text-primary flex items-center space-x-1 transition-all duration-300"
         >
@@ -114,22 +112,33 @@ export default function Navbar() {
           </span>
         </a>
 
-        {/* desktop menu */}
+        {/* Desktop menu */}
         <ul className="hidden md:flex gap-8 text-gray-800 font-medium">
-          {navLinks.map(({ href, label }) => (
-            <li key={href}>
-              <a
-                href={href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavClick(href);
-                }}
-                className="hover:text-primary transition-colors"
-              >
-                {label}
-              </a>
-            </li>
-          ))}
+          {navLinks.map(({ href, label, isHash }) =>
+            isHash ? (
+              <li key={href}>
+                <a
+                  href={href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleHashNav(href);
+                  }}
+                  className="hover:text-primary transition-colors"
+                >
+                  {label}
+                </a>
+              </li>
+            ) : (
+              <li key={href}>
+                <Link
+                  href={href}
+                  className="hover:text-primary transition-colors"
+                >
+                  {label}
+                </Link>
+              </li>
+            )
+          )}
         </ul>
 
         {/* Botão */}
@@ -144,7 +153,7 @@ export default function Navbar() {
           </a>
         </div>
 
-        {/* mobile menu button */}
+        {/* Mobile menu button */}
         <button
           className="md:hidden text-gray-800"
           onClick={() => setIsOpen(!isOpen)}
@@ -154,24 +163,36 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* mobile menu dropdown */}
+      {/* Mobile menu dropdown */}
       {isOpen && (
         <div className="md:hidden bg-white border-t border-gray-100 shadow-md px-6 pb-4">
           <ul className="flex flex-col gap-4 text-gray-800 font-medium">
-            {navLinks.map(({ href, label }) => (
-              <li key={href}>
-                <a
-                  href={href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick(href);
-                  }}
-                  className="block py-2 border-b border-gray-100 hover:text-primary transition-colors"
-                >
-                  {label}
-                </a>
-              </li>
-            ))}
+            {navLinks.map(({ href, label, isHash }) =>
+              isHash ? (
+                <li key={href}>
+                  <a
+                    href={href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleHashNav(href);
+                    }}
+                    className="block py-2 border-b border-gray-100 hover:text-primary transition-colors"
+                  >
+                    {label}
+                  </a>
+                </li>
+              ) : (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className="block py-2 border-b border-gray-100 hover:text-primary transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {label}
+                  </Link>
+                </li>
+              )
+            )}
           </ul>
         </div>
       )}
