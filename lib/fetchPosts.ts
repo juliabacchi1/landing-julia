@@ -26,6 +26,7 @@ export async function fetchAllPosts(): Promise<Post[]> {
       tagColor,
       icon,
       "slug": slug.current,
+      content,
       publishedAt
     }
   `;
