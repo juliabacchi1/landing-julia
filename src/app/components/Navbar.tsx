@@ -13,6 +13,19 @@ const navLinks = [
   { href: "/blog", label: "Blog" },
 ];
 
+const scrollToIdWithOffset = (id: string, offset = 40) => {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
+  const offsetPosition = elementPosition - offset;
+
+  window.scrollTo({
+    top: offsetPosition,
+    behavior: "smooth",
+  });
+};
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -28,24 +41,29 @@ export default function Navbar() {
 
   const handleNavClick = async (href: string) => {
     setIsOpen(false);
+    const id = href.split("#")[1];
+    const isMobile = window.innerWidth < 768; // Tailwind md breakpoint
 
     if (href.startsWith("/#")) {
-      const id = href.split("#")[1];
       if (window.location.pathname !== "/") {
         await router.push("/");
-
-        // Espera a navegação finalizar para rolar à âncora
         setTimeout(() => {
-          const el = document.getElementById(id);
-          if (el) el.scrollIntoView({ behavior: "smooth" });
+          if (isMobile) {
+            scrollToIdWithOffset(id);
+          } else {
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: "smooth" });
+          }
         }, 500);
       } else {
-        // Já está na home, faz só scroll suave
-        const el = document.getElementById(id);
-        if (el) el.scrollIntoView({ behavior: "smooth" });
+        if (isMobile) {
+          scrollToIdWithOffset(id);
+        } else {
+          const el = document.getElementById(id);
+          if (el) el.scrollIntoView({ behavior: "smooth" });
+        }
       }
     } else {
-      // Link normal (ex: /blog)
       router.push(href);
     }
   };

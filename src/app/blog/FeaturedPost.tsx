@@ -86,7 +86,7 @@ export default function FeaturedPost() {
                 </div>
                 <Link
                   href={`/blog/posts/${featured.slug}`}
-                  className="ml-auto bg-primary hover:bg-purple-700 text-white font-medium py-2 px-6 rounded-full transition duration-300 flex items-center"
+                  className="ml-auto bg-primary hover:bg-purple-700 text-white font-medium py-2 px-4 md:px-6 rounded-full transition duration-300 flex items-center"
                 >
                   Ler mais
                   <ArrowRight className="h-4 w-4 ml-2" />

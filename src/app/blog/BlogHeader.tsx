@@ -8,7 +8,7 @@ export default function BlogHeader() {
       }}
     >
       <div className="max-w-6xl mx-auto md:text-center">
-        <h1 className="text-5xl font-extrabold mb-4">
+        <h1 className="text-5xl font-extrabold mb-4 mt-6 md:mt-0">
           BlogMaster
         </h1>
         <p className="text-xl max-w-3xl mx-auto md:text-center">
