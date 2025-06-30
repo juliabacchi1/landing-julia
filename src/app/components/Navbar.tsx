@@ -73,60 +73,62 @@ export default function Navbar() {
     >
       <nav className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center mt-4 md:mt-0">
         {/* Logo */}
-        <a
-          href="/#hero"
-          onClick={(e) => {
-            e.preventDefault();
-            handleHashNav("/#hero");
-          }}
-          className="text-2xl font-bold text-primary flex items-center space-x-1 transition-all duration-300"
-        >
-          <span className="inline-flex overflow-hidden">
-            <span>J</span>
-            <motion.span
-              animate={{
-                x: scrolled ? -20 : 0,
-                opacity: scrolled ? 0 : 1,
-                width: scrolled ? 0 : "auto",
-              }}
-              transition={{ duration: 0.4, ease: "easeInOut" }}
-              className="inline-block"
-            >
-              ulia
-            </motion.span>
-          </span>
+        <Link href="/#hero" scroll={false} legacyBehavior>
+          <a
+            onClick={(e) => {
+              e.preventDefault();
+              handleHashNav("/#hero");
+            }}
+            className="text-2xl font-bold text-primary flex items-center space-x-1 transition-all duration-300"
+          >
+            <span className="inline-flex overflow-hidden">
+              <span>J</span>
+              <motion.span
+                animate={{
+                  x: scrolled ? -20 : 0,
+                  opacity: scrolled ? 0 : 1,
+                  width: scrolled ? 0 : "auto",
+                }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+                className="inline-block"
+              >
+                ulia
+              </motion.span>
+            </span>
 
-          <span className="inline-flex overflow-hidden text-secondary">
-            <span>B</span>
-            <motion.span
-              animate={{
-                x: scrolled ? -20 : 0,
-                opacity: scrolled ? 0 : 1,
-                width: scrolled ? 0 : "auto",
-              }}
-              transition={{ duration: 0.4, ease: "easeInOut" }}
-              className="inline-block"
-            >
-              acchi
-            </motion.span>
-          </span>
-        </a>
+            <span className="inline-flex overflow-hidden text-secondary">
+              <span>B</span>
+              <motion.span
+                animate={{
+                  x: scrolled ? -20 : 0,
+                  opacity: scrolled ? 0 : 1,
+                  width: scrolled ? 0 : "auto",
+                }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+                className="inline-block"
+              >
+                acchi
+              </motion.span>
+            </span>
+          </a>
+        </Link>
 
         {/* Desktop menu */}
         <ul className="hidden md:flex gap-8 text-gray-800 font-medium">
           {navLinks.map(({ href, label, isHash }) =>
             isHash ? (
               <li key={href}>
-                <a
-                  href={href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleHashNav(href);
-                  }}
-                  className="hover:text-primary transition-colors"
-                >
-                  {label}
-                </a>
+                <Link href={href} scroll={false} legacyBehavior>
+                  <a
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleHashNav(href);
+                    }}
+                    className="hover:text-primary transition-colors"
+                  >
+                    {label}
+                  </a>
+                </Link>
               </li>
             ) : (
               <li key={href}>
@@ -170,16 +172,17 @@ export default function Navbar() {
             {navLinks.map(({ href, label, isHash }) =>
               isHash ? (
                 <li key={href}>
-                  <a
-                    href={href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleHashNav(href);
-                    }}
-                    className="block py-2 border-b border-gray-100 hover:text-primary transition-colors"
-                  >
-                    {label}
-                  </a>
+                  <Link href={href} scroll={false} legacyBehavior>
+                    <a
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleHashNav(href);
+                      }}
+                      className="block py-2 border-b border-gray-100 hover:text-primary transition-colors"
+                    >
+                      {label}
+                    </a>
+                  </Link>
                 </li>
               ) : (
                 <li key={href}>
