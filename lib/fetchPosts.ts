@@ -16,7 +16,7 @@ export async function fetchAllSlugs(): Promise<string[]> {
 
 export async function fetchAllPosts(): Promise<Post[]> {
   const query = groq`
-    *[_type == "post"][]{
+    *[_type == "post"] | order(publishedAt desc){
       title,
       description,
       category,
