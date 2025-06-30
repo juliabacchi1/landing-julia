@@ -143,8 +143,8 @@ export default function Hero() {
                 </div>
               )}
 
-              <div className="absolute -top-6 -right-6 w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-full opacity-20"></div>
-              <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-accent rounded-full opacity-10"></div>
+              <div className="absolute -top-6 -right-6 w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-full opacity-20 hidden md:block"></div>
+              <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-accent rounded-full opacity-10 hidden md:block"></div>
             </motion.div>
           </div>
         </div>
