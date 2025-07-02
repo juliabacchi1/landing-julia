@@ -5,6 +5,7 @@ import type { Post } from "../../../../../lib/types";
 import { tagColorsClasses } from "../../../../../lib/tagColors";
 import Link from "next/link";
 import Icon from "@/app/components/Icon";
+import ShareLink from "../../ShareLink";
 import Footer from "@/app/components/FooterSection";
 
 type Props = {
@@ -72,13 +73,19 @@ export default async function PostPage({ params }: Props) {
             >
               {post.letter}
             </div>
-            <div>
+
+            <div className="flex flex-col flex-grow">
               <p className="text-sm text-gray-800 font-semibold">
                 {post.author}
               </p>
-              <p className="text-xs text-gray-500">{post.category}</p>
+              <p className="text-xs text-gray-500 leading-relaxed tracking-wider">
+                JB Landings
+              </p>
             </div>
+
+            <ShareLink title={post.title} />
           </div>
+
           {/* Retângulo com ícone */}
           <div
             className={`w-full h-60 rounded-xl mb-8 flex items-center justify-center ${color.bgLight}`}

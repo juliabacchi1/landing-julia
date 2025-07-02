@@ -4,7 +4,7 @@ export default function BlogHeader() {
       className="text-white px-6 py-16 md:py-20"
       style={{
         background:
-          "linear-gradient(135deg, #6E44E5 0%, #3385D7 50%, #51C0CD 100%)",
+          "linear-gradient(135deg, #A393F1 0%, #6E44E5 30%, #3385D7 65%, #51C0CD 100%)",
       }}
     >
       <div className="max-w-6xl mx-auto md:text-center">
