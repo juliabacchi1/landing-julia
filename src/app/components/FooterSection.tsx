@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { client } from "../../../lib/sanity";
 import { footerQuery } from "../../../queries/footer";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Facebook,
   Instagram,
@@ -46,8 +47,22 @@ type FooterData = {
   copyright: string;
 };
 
+const scrollToIdWithOffset = (id: string, offset = 40) => {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
+  const offsetPosition = elementPosition - offset;
+
+  window.scrollTo({
+    top: offsetPosition,
+    behavior: "smooth",
+  });
+};
+
 export default function Footer() {
   const [data, setData] = useState<FooterData | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     client
@@ -58,11 +73,34 @@ export default function Footer() {
 
   if (!data) return null;
 
-  // Separar a marca em duas partes pra aplicar destaque
   const hasHighlight = data.brandName.includes(data.brandHighlight);
   const brandParts = hasHighlight
     ? data.brandName.split(data.brandHighlight)
     : [data.brandName, ""];
+
+    const handleHashNav = async (href: string) => {
+      const id = href.split("#")[1];
+      const isMobile = window.innerWidth < 768;
+
+      if (window.location.pathname !== "/") {
+        await router.push("/");
+        setTimeout(() => {
+          if (isMobile) {
+            scrollToIdWithOffset(id);
+          } else {
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 500);
+      } else {
+        if (isMobile) {
+          scrollToIdWithOffset(id);
+        } else {
+          const el = document.getElementById(id);
+          if (el) el.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    };
 
   return (
     <footer className="bg-dark text-white py-8 px-4">
@@ -74,7 +112,7 @@ export default function Footer() {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          {/* Coluna Marca */}
+          {/* Coluna da Marca */}
           <div>
             <div className="mb-6 text-2xl font-bold text-white">
               {brandParts[0]}
@@ -103,17 +141,40 @@ export default function Footer() {
             <div key={i}>
               <h3 className="font-semibold text-lg mb-4">{col.title}</h3>
               <ul className="space-y-3">
-                {col.links.map((link, j) => (
-                  <li key={j}>
-                    <Link
-                      href={link.url}
-                      aria-label={`Ir para ${link.text}`}
-                      className="text-gray-400 hover:text-white transition-colors"
-                    >
-                      {link.text}
-                    </Link>
-                  </li>
-                ))}
+                {col.links.map((link, j) => {
+                  const isHash = link.url.startsWith("/#");
+
+                  if (isHash) {
+                    return (
+                      <li key={j}>
+                        <Link href={link.url} scroll={false} legacyBehavior>
+                          <a
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleHashNav(link.url);
+                            }}
+                            className="text-gray-400 hover:text-white transition-colors"
+                            aria-label={`Ir para ${link.text}`}
+                          >
+                            {link.text}
+                          </a>
+                        </Link>
+                      </li>
+                    );
+                  } else {
+                    return (
+                      <li key={j}>
+                        <Link
+                          href={link.url}
+                          className="text-gray-400 hover:text-white transition-colors"
+                          aria-label={`Ir para ${link.text}`}
+                        >
+                          {link.text}
+                        </Link>
+                      </li>
+                    );
+                  }
+                })}
               </ul>
             </div>
           ))}
