@@ -9,7 +9,6 @@ export const ctaQuery = `*[_type == "cta"][0] {
     placeholder,
     options[],
   },
-  submitText,
-  termsText
+  submitText
 }
 `;

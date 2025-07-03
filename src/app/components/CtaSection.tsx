@@ -20,7 +20,6 @@ type CtaData = {
   subtitle: string;
   formFields: FormField[];
   submitText: string;
-  termsText: string;
 };
 
 export default function CtaSection() {
@@ -249,7 +248,23 @@ export default function CtaSection() {
                     htmlFor={field.name}
                     className="ml-2 block text-sm text-gray-700"
                   >
-                    {data.termsText}
+                    Concordo com os{" "}
+                    <a
+                      href="/termos-de-servico"
+                      target="_blank"
+                      className="underline text-primary"
+                    >
+                      Termos de Serviço
+                    </a>{" "}
+                    e a{" "}
+                    <a
+                      href="/politica-de-privacidade"
+                      target="_blank"
+                      className="underline text-primary"
+                    >
+                      Política de Privacidade
+                    </a>
+                    .
                   </label>
                 </div>
               ))}
