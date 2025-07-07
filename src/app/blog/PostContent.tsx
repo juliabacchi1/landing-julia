@@ -35,7 +35,7 @@ const components: PortableTextComponents = {
   },
   block: {
     h1: ({ children }) => (
-      <h1 className="text-3xl font-bold text-gray-900 my-8 tracking-tight">
+      <h1 className="text-3xl font-bold text-gray-800 my-8 tracking-tight">
         {children}
       </h1>
     ),

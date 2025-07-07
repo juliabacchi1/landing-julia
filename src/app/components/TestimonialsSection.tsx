@@ -51,7 +51,9 @@ export default function TestimonialsSection() {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">{data.title}</h2>
+          <h2 className="text-3xl md:text-4xl text-gray-800 font-bold mb-4">
+            {data.title}
+          </h2>
           <p className="text-gray-600 max-w-3xl mx-auto">{data.subtitle}</p>
         </motion.div>
 
@@ -72,7 +74,9 @@ export default function TestimonialsSection() {
                   {testimonial.initials}
                 </div>
                 <div className="ml-4">
-                  <h4 className="font-semibold">{testimonial.name}</h4>
+                  <h4 className="font-semibold text-gray-900">
+                    {testimonial.name}
+                  </h4>
                   <p className="text-sm text-gray-600">{testimonial.role}</p>
                 </div>
               </div>

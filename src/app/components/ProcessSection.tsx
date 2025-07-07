@@ -49,7 +49,9 @@ export default function ProcessSection() {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">{data.title}</h2>
+          <h2 className="text-3xl md:text-4xl text-gray-800 font-bold mb-4">
+            {data.title}
+          </h2>
           <p className="text-gray-600 max-w-3xl mx-auto">{data.subtitle}</p>
         </motion.div>
 
@@ -66,7 +68,9 @@ export default function ProcessSection() {
               <div className="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-6 text-white font-bold text-xl">
                 {step.number}
               </div>
-              <h3 className="text-xl font-semibold mb-3">{step.title}</h3>
+              <h3 className="text-xl text-gray-800 font-semibold mb-3">
+                {step.title}
+              </h3>
               <p className="text-gray-600">{step.description}</p>
             </motion.div>
           ))}

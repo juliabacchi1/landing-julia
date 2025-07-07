@@ -29,7 +29,7 @@ export default function FeaturedPost() {
   return (
     <section className="py-12 px-4 md:px-0">
       <div className="container mx-auto">
-        <h2 className="text-3xl font-bold mb-8 text-dark">
+        <h2 className="text-3xl font-bold mb-8 text-gray-800">
           Tópico em Destaque
         </h2>
 
@@ -66,7 +66,7 @@ export default function FeaturedPost() {
                       : "Sem data"}
                   </span>
                 </div>
-                <h3 className="text-2xl font-bold mb-4 text-dark">
+                <h3 className="text-2xl font-bold mb-4 text-gray-800">
                   {featured.title}
                 </h3>
                 <p className="text-gray-600 mb-6 line-clamp-3">
@@ -80,7 +80,7 @@ export default function FeaturedPost() {
                   {featured.letter}
                 </div>
                 <div className="ml-3">
-                  <p className="text-sm font-medium text-dark">
+                  <p className="text-sm font-medium text-gray-800">
                     {featured.author}
                   </p>
                 </div>

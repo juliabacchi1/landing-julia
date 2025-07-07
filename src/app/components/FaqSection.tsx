@@ -44,7 +44,9 @@ export default function FaqSection() {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">{data.title}</h2>
+          <h2 className="text-3xl md:text-4xl text-gray-800 font-bold mb-4">
+            {data.title}
+          </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">{data.subtitle}</p>
         </motion.div>
 
@@ -65,7 +67,9 @@ export default function FaqSection() {
                 aria-controls={`faq-answer-${index}`}
                 id={`faq-question-${index}`}
               >
-                <span className="font-medium text-left">{item.question}</span>
+                <span className="font-medium text-gray-800 text-left">
+                  {item.question}
+                </span>
                 <ChevronDown
                   className={`text-primary transform transition-transform duration-300 ${
                     activeIndex === index ? "rotate-180" : ""

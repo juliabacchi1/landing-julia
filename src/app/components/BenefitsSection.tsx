@@ -104,7 +104,9 @@ export default function BenefitsSection() {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">{data.title}</h2>
+          <h2 className="text-3xl md:text-4xl text-gray-800 font-bold mb-4">
+            {data.title}
+          </h2>
           <p className="text-gray-600 max-w-4xl mx-auto">{data.subtitle}</p>
         </motion.div>
 
@@ -132,7 +134,9 @@ export default function BenefitsSection() {
                   {iconComponents[benefit.icon]}
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-3">{benefit.title}</h3>
+              <h3 className="text-xl text-gray-800 font-semibold mb-3">
+                {benefit.title}
+              </h3>
               <p className="text-gray-600">{benefit.description}</p>
             </motion.div>
           ))}

@@ -56,7 +56,9 @@ export default function PricingSection() {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">{data.title}</h2>
+          <h2 className="text-3xl md:text-4xl text-gray-800 font-bold mb-4">
+            {data.title}
+          </h2>
           <p className="text-gray-600 max-w-3xl mx-auto">{data.subtitle}</p>
         </motion.div>
 
@@ -81,9 +83,13 @@ export default function PricingSection() {
               )}
 
               <div className="mb-6">
-                <h3 className="text-xl font-semibold mb-2">{plan.name}</h3>
+                <h3 className="text-xl text-gray-800 font-semibold mb-2">
+                  {plan.name}
+                </h3>
                 <div className="flex items-end justify-center gap-2">
-                  <span className="text-4xl font-bold">{plan.price}</span>
+                  <span className="text-4xl text-gray-800 font-bold">
+                    {plan.price}
+                  </span>
                   <span className="text-gray-500">{plan.priceDescription}</span>
                 </div>
                 <p className="text-gray-600 mt-3">{plan.description}</p>

@@ -139,7 +139,7 @@ export default function CtaSection() {
           viewport={{ once: true }}
         >
           <div className="text-center mb-8 md:mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl text-gray-800 font-bold mb-4">
               {data.title}
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">{data.subtitle}</p>
