@@ -68,20 +68,6 @@ const iconComponents = {
   ),
 };
 
-const container = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 },
-};
-
 export default function BenefitsSection() {
   const [data, setData] = useState<BenefitsData | null>(null);
 
@@ -110,18 +96,15 @@ export default function BenefitsSection() {
           <p className="text-gray-600 max-w-4xl mx-auto">{data.subtitle}</p>
         </motion.div>
 
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ amount: 0.2, once: true }}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {data.benefits.map((benefit, index) => (
             <motion.div
               key={index}
-              variants={item}
               className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:-translate-y-2 transition-all duration-300"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
             >
               <div className="w-14 h-14 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center mb-6">
                 <svg
@@ -140,7 +123,7 @@ export default function BenefitsSection() {
               <p className="text-gray-600">{benefit.description}</p>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
