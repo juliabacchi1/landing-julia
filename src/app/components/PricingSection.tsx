@@ -142,7 +142,59 @@ export default function PricingSection() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                {/** TODO: mesmo conteúdo aqui */}
+                {plan.highlight && (
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-primary text-white text-sm font-semibold py-1 px-4 rounded-full shadow-md">
+                    {plan.highlightText}
+                  </div>
+                )}
+
+                <div className="mb-6">
+                  <h3 className="text-xl text-gray-800 font-semibold mb-2">
+                    {plan.name}
+                  </h3>
+                  <div className="flex items-end justify-center gap-2">
+                    <span className="text-4xl text-gray-800 font-bold">
+                      {plan.price}
+                    </span>
+                    <span className="text-gray-500">
+                      {plan.priceDescription}
+                    </span>
+                  </div>
+                  <p className="text-gray-600 mt-3">{plan.description}</p>
+                </div>
+
+                <ul className="space-y-3 mb-8">
+                  {plan.features.map((feature, i) => (
+                    <li key={i} className="flex items-center">
+                      <span className="mr-2">
+                        {feature.included ? (
+                          <CheckCircle className="w-5 h-5 text-primary" />
+                        ) : (
+                          <XCircle className="w-5 h-5 text-gray-300" />
+                        )}
+                      </span>
+                      <span
+                        className={`${
+                          feature.included ? "" : "text-gray-400 line-through"
+                        }`}
+                      >
+                        {feature.text}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+
+                <Link
+                  href="#contato"
+                  onClick={() => trackSelectPlan(plan.name)}
+                  className={`block w-full py-3 px-6 text-center font-semibold rounded-full transition-all ${
+                    plan.highlight
+                      ? "bg-gradient-to-r from-primary to-secondary text-white hover:opacity-90"
+                      : "border-2 border-primary text-primary hover:bg-primary hover:text-white"
+                  }`}
+                >
+                  {plan.ctaText}
+                </Link>
               </motion.div>
             )
           )}

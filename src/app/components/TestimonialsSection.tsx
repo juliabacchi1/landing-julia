@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { client } from "../../../lib/sanity";
 import { testimonialsQuery } from "../../../queries/testimonials";
+import { useIsMobile } from "../../../lib/useIsMobile";
 import { Star } from "lucide-react";
 
 type Testimonial = {
@@ -23,6 +24,7 @@ type TestimonialsData = {
 
 export default function TestimonialsSection() {
   const [data, setData] = useState<TestimonialsData | null>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     client
@@ -58,48 +60,87 @@ export default function TestimonialsSection() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {data.testimonials.map((testimonial, index) => (
-            <motion.div
-              key={index}
-              className="bg-gradient-to-br from-primary/5 to-secondary/5 p-8 rounded-xl hover:shadow-md transition-all"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-            >
-              <div className="flex items-center mb-4">
-                <div
-                  className={`w-12 h-12 ${colorClasses[testimonial.color]} rounded-full flex items-center justify-center text-white font-bold`}
-                >
-                  {testimonial.initials}
+          {data.testimonials.map((testimonial, index) =>
+            isMobile ? (
+              <div
+                key={index}
+                className="bg-gradient-to-br from-primary/5 to-secondary/5 p-8 rounded-xl hover:shadow-md transition-all"
+              >
+                <div className="flex items-center mb-4">
+                  <div
+                    className={`w-12 h-12 ${colorClasses[testimonial.color]} rounded-full flex items-center justify-center text-white font-bold`}
+                  >
+                    {testimonial.initials}
+                  </div>
+                  <div className="ml-4">
+                    <h4 className="font-semibold text-gray-900">
+                      {testimonial.name}
+                    </h4>
+                    <p className="text-sm text-gray-600">{testimonial.role}</p>
+                  </div>
                 </div>
-                <div className="ml-4">
-                  <h4 className="font-semibold text-gray-900">
-                    {testimonial.name}
-                  </h4>
-                  <p className="text-sm text-gray-600">{testimonial.role}</p>
+                <p className="text-gray-700 italic">
+                  &quot;{testimonial.content}&quot;
+                </p>
+                <div className="mt-4 flex text-yellow-400">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className={
+                        i < testimonial.rating
+                          ? "text-yellow-400"
+                          : "text-gray-300"
+                      }
+                      size={20}
+                      fill={i < testimonial.rating ? "currentColor" : "none"}
+                      strokeWidth={1.5}
+                    />
+                  ))}
                 </div>
               </div>
-              <p className="text-gray-700 italic">
-                &quot;{testimonial.content}&quot;
-              </p>
-              <div className="mt-4 flex text-yellow-400">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={
-                      i < testimonial.rating
-                        ? "text-yellow-400"
-                        : "text-gray-300"
-                    }
-                    size={20}
-                    fill={i < testimonial.rating ? "currentColor" : "none"}
-                    strokeWidth={1.5}
-                  />
-                ))}
-              </div>
-            </motion.div>
-          ))}
+            ) : (
+              <motion.div
+                key={index}
+                className="bg-gradient-to-br from-primary/5 to-secondary/5 p-8 rounded-xl hover:shadow-md transition-all"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <div className="flex items-center mb-4">
+                  <div
+                    className={`w-12 h-12 ${colorClasses[testimonial.color]} rounded-full flex items-center justify-center text-white font-bold`}
+                  >
+                    {testimonial.initials}
+                  </div>
+                  <div className="ml-4">
+                    <h4 className="font-semibold text-gray-900">
+                      {testimonial.name}
+                    </h4>
+                    <p className="text-sm text-gray-600">{testimonial.role}</p>
+                  </div>
+                </div>
+                <p className="text-gray-700 italic">
+                  &quot;{testimonial.content}&quot;
+                </p>
+                <div className="mt-4 flex text-yellow-400">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className={
+                        i < testimonial.rating
+                          ? "text-yellow-400"
+                          : "text-gray-300"
+                      }
+                      size={20}
+                      fill={i < testimonial.rating ? "currentColor" : "none"}
+                      strokeWidth={1.5}
+                    />
+                  ))}
+                </div>
+              </motion.div>
+            )
+          )}
         </div>
       </div>
     </section>
