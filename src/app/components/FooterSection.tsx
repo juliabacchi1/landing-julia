@@ -147,17 +147,17 @@ export default function Footer() {
                   if (isHash) {
                     return (
                       <li key={j}>
-                        <Link href={link.url} scroll={false} legacyBehavior>
-                          <a
-                            onClick={(e) => {
-                              e.preventDefault();
-                              handleHashNav(link.url);
-                            }}
-                            className="text-gray-400 hover:text-white transition-colors"
-                            aria-label={`Ir para ${link.text}`}
-                          >
-                            {link.text}
-                          </a>
+                        <Link
+                          href={link.url}
+                          scroll={false}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleHashNav(link.url);
+                          }}
+                          className="text-gray-400 hover:text-white transition-colors"
+                          aria-label={`Ir para ${link.text}`}
+                        >
+                          {link.text}
                         </Link>
                       </li>
                     );
