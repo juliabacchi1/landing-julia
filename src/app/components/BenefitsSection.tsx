@@ -115,7 +115,7 @@ export default function BenefitsSection() {
           variants={container}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true }}
+          viewport={{ amount: 0.2, once: true }}
         >
           {data.benefits.map((benefit, index) => (
             <motion.div

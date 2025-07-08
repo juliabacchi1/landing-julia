@@ -48,7 +48,7 @@ export default function ProjectsSection() {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl text-gray-800 font-bold text-custom mb-4">
+          <h2 className="text-3xl md:text-4xl text-gray-800 font-bold text-custom mb-4">
             Trabalhos recentes
           </h2>
           <p className="text-lg text-custom opacity-70">
