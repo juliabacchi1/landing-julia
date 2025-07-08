@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { client } from "../../../lib/sanity";
 import { benefitsQuery } from "../../../queries/benefits";
+import { useIsMobile } from "../../../lib/useIsMobile";
 import { Zap, Monitor, Clock, BarChart, Smartphone, Cloud } from "lucide-react";
 
 type Benefit = {
@@ -29,6 +30,7 @@ const iconComponents = {
 
 export default function BenefitsSection() {
   const [data, setData] = useState<BenefitsData | null>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     client
@@ -56,24 +58,39 @@ export default function BenefitsSection() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {data.benefits.map((benefit, index) => (
-            <motion.div
-              key={index}
-              className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:-translate-y-2 transition-all duration-300"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-            >
-              <div className="w-14 h-14 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center mb-6 text-white">
-                {iconComponents[benefit.icon]}
+          {data.benefits.map((benefit, index) =>
+            isMobile ? (
+              <div
+                key={index}
+                className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:-translate-y-2 transition-all duration-300"
+              >
+                <div className="w-14 h-14 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center mb-6 text-white">
+                  {iconComponents[benefit.icon]}
+                </div>
+                <h3 className="text-xl text-gray-800 font-semibold mb-3">
+                  {benefit.title}
+                </h3>
+                <p className="text-gray-600">{benefit.description}</p>
               </div>
-              <h3 className="text-xl text-gray-800 font-semibold mb-3">
-                {benefit.title}
-              </h3>
-              <p className="text-gray-600">{benefit.description}</p>
-            </motion.div>
-          ))}
+            ) : (
+              <motion.div
+                key={index}
+                className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:-translate-y-2 transition-all duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <div className="w-14 h-14 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center mb-6 text-white">
+                  {iconComponents[benefit.icon]}
+                </div>
+                <h3 className="text-xl text-gray-800 font-semibold mb-3">
+                  {benefit.title}
+                </h3>
+                <p className="text-gray-600">{benefit.description}</p>
+              </motion.div>
+            )
+          )}
         </div>
       </div>
     </section>
