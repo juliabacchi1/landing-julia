@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { client } from "../../../lib/sanity";
 import { ctaQuery } from "../../../queries/cta";
 import { event } from "../../../lib/gtag";
+import { usePlanStore } from "../store/usePlanStore";
 
 type FormField = {
   label: string;
@@ -23,6 +24,7 @@ type CtaData = {
 };
 
 export default function CtaSection() {
+  const { plan } = usePlanStore();
   const [data, setData] = useState<CtaData | null>(null);
   const [formData, setFormData] = useState<Record<string, string | boolean>>(
     {}
@@ -31,7 +33,6 @@ export default function CtaSection() {
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
   >("idle");
-
   useEffect(() => {
     client
       .fetch(ctaQuery)
@@ -61,7 +62,6 @@ export default function CtaSection() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
     setFormData((prev) => ({ ...prev, [name]: checked }));
@@ -122,6 +122,13 @@ export default function CtaSection() {
       setIsSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      "Plano de interesse": plan,
+    }));
+  }, [plan]);
 
   if (!data) return null;
 

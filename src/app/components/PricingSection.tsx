@@ -8,6 +8,7 @@ import { pricingQuery } from "../../../queries/pricing";
 import { useIsMobile } from "../../../lib/useIsMobile";
 import { CheckCircle, XCircle } from "lucide-react";
 import Link from "next/link";
+import { usePlanStore } from "../store/usePlanStore";
 
 type PricingData = {
   title: string;
@@ -36,6 +37,7 @@ const trackSelectPlan = (plano: string) => {
 };
 
 export default function PricingSection() {
+  const { setPlan } = usePlanStore();
   const [data, setData] = useState<PricingData | null>(null);
   const isMobile = useIsMobile();
 
@@ -186,7 +188,10 @@ export default function PricingSection() {
 
                 <Link
                   href="#contato"
-                  onClick={() => trackSelectPlan(plan.name)}
+                  onClick={() => {
+                    trackSelectPlan(plan.name);
+                    setPlan(plan.name);
+                  }}
                   className={`block w-full py-3 px-6 text-center font-semibold rounded-full transition-all ${
                     plan.highlight
                       ? "bg-gradient-to-r from-primary to-secondary text-white hover:opacity-90"
